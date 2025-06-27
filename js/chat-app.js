@@ -247,15 +247,15 @@ class ExpediaChat {
     const maxRevenue = Math.max(...revenue);
     
     chartContent.innerHTML = `
-      <div class="line-chart">
-        <svg class="chart-svg" viewBox="0 0 400 120" style="width: 100%; height: 140px;">
-          ${this.generateLinePath(revenue, maxRevenue, 400, 120, '#003580')}
-          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 400, 120, '#0066cc', true)}
+      <div class="line-chart" style="height: 200px; padding: var(--space-lg);">
+        <svg class="chart-svg" viewBox="0 0 500 160" style="width: 100%; height: 180px;">
+          ${this.generateLinePath(revenue, maxRevenue, 500, 160, '#003580', false, 3)}
+          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 500, 160, '#0066cc', true, 3)}
         </svg>
       </div>
-      <div class="chart-legend">
-        <span class="legend-item">📈 Revenue: $${revenue[revenue.length-1].toLocaleString()}</span>
-        <span class="legend-item">🏨 Occupancy: ${occupancy[occupancy.length-1]}%</span>
+      <div class="chart-legend" style="padding: var(--space-md); font-size: 14px; display: flex; justify-content: center; gap: var(--space-xl);">
+        <span class="legend-item" style="font-weight: bold;">📈 Revenue: $${revenue[revenue.length-1].toLocaleString()}</span>
+        <span class="legend-item" style="font-weight: bold;">🏨 Occupancy: ${occupancy[occupancy.length-1]}%</span>
       </div>
     `;
   }
@@ -268,20 +268,20 @@ class ExpediaChat {
     const maxPotential = Math.max(...potential);
     
     const bars = hotels.map((hotel, i) => {
-      const height = (potential[i] / maxPotential) * 100;
-      const x = i * 90 + 30;
-      return `<rect x="${x}" y="${120-height}" width="60" height="${height}" fill="#003580" opacity="0.9" rx="6"/>`;
+      const height = (potential[i] / maxPotential) * 130;
+      const x = i * 110 + 40;
+      return `<rect x="${x}" y="${160-height}" width="80" height="${height}" fill="#003580" opacity="0.9" rx="8"/>`;
     }).join('');
     
     chartContent.innerHTML = `
-      <div class="bar-chart">
-        <svg class="chart-svg" viewBox="0 0 400 120" style="width: 100%; height: 140px;">
+      <div class="bar-chart" style="height: 200px; padding: var(--space-lg);">
+        <svg class="chart-svg" viewBox="0 0 500 160" style="width: 100%; height: 180px;">
           ${bars}
         </svg>
       </div>
-      <div class="chart-legend">
-        <span class="legend-item">💰 Top: $${Math.max(...potential).toLocaleString()}</span>
-        <span class="legend-item">✅ Avg Confidence: ${Math.round(confidence.reduce((a,b) => a+b) / confidence.length)}%</span>
+      <div class="chart-legend" style="padding: var(--space-md); font-size: 14px; display: flex; justify-content: center; gap: var(--space-xl);">
+        <span class="legend-item" style="font-weight: bold;">💰 Top: $${Math.max(...potential).toLocaleString()}</span>
+        <span class="legend-item" style="font-weight: bold;">✅ Avg Confidence: ${Math.round(confidence.reduce((a,b) => a+b) / confidence.length)}%</span>
       </div>
     `;
   }
@@ -321,37 +321,37 @@ class ExpediaChat {
     const { territory_growth, vs_peer_avg, optimization_score, weekly_calls } = data.data;
     
     chartContent.innerHTML = `
-      <div class="coaching-metrics" style="padding: var(--space-lg); height: 100%;">
-        <div class="score-display" style="text-align: center; margin-bottom: var(--space-lg);">
-          <div class="score-circle" style="width: 60px; height: 60px; font-size: 18px; margin: 0 auto;">
+      <div class="coaching-metrics" style="padding: var(--space-xl); height: 100%; display: flex; flex-direction: column; justify-content: center;">
+        <div class="score-display" style="text-align: center; margin-bottom: var(--space-xl);">
+          <div class="score-circle" style="width: 80px; height: 80px; font-size: 24px; margin: 0 auto; background: linear-gradient(135deg, var(--expedia-blue) 0%, #004080 100%); border: 3px solid rgba(255,255,255,0.3); box-shadow: 0 8px 16px rgba(0,53,128,0.3);">
             <span class="score-number">${optimization_score}</span>
           </div>
-          <div class="score-label" style="font-size: 12px; margin-top: var(--space-sm);">Optimization Score</div>
+          <div class="score-label" style="font-size: 14px; margin-top: var(--space-md); font-weight: 600;">Optimization Score</div>
         </div>
-        <div class="performance-stats" style="display: flex; flex-direction: column; gap: var(--space-lg);">
-          <div class="stat-item" style="text-align: center; padding: var(--space-md); background: rgba(0,53,128,0.05); border-radius: var(--radius-md);">
-            <span class="stat-value trend-up" style="font-size: 18px; font-weight: bold; display: block;">${territory_growth}</span>
-            <span class="stat-label" style="font-size: 12px; color: var(--text-secondary);">Territory Growth</span>
+        <div class="performance-stats" style="display: flex; flex-direction: column; gap: var(--space-xl);">
+          <div class="stat-item" style="text-align: center; padding: var(--space-lg); background: linear-gradient(135deg, rgba(0,53,128,0.08) 0%, rgba(0,53,128,0.04) 100%); border-radius: var(--radius-lg); border: 1px solid rgba(0,53,128,0.1);">
+            <span class="stat-value trend-up" style="font-size: 22px; font-weight: bold; display: block; color: var(--success-green);">${territory_growth}</span>
+            <span class="stat-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Territory Growth</span>
           </div>
-          <div class="stat-item" style="text-align: center; padding: var(--space-md); background: rgba(0,53,128,0.05); border-radius: var(--radius-md);">
-            <span class="stat-value trend-up" style="font-size: 18px; font-weight: bold; display: block;">${vs_peer_avg}</span>
-            <span class="stat-label" style="font-size: 12px; color: var(--text-secondary);">vs Peers</span>
+          <div class="stat-item" style="text-align: center; padding: var(--space-lg); background: linear-gradient(135deg, rgba(0,53,128,0.08) 0%, rgba(0,53,128,0.04) 100%); border-radius: var(--radius-lg); border: 1px solid rgba(0,53,128,0.1);">
+            <span class="stat-value trend-up" style="font-size: 22px; font-weight: bold; display: block; color: var(--success-green);">${vs_peer_avg}</span>
+            <span class="stat-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">vs Peers</span>
           </div>
         </div>
       </div>
     `;
   }
 
-  generateLinePath(data, max, width, height, color, isDashed = false) {
+  generateLinePath(data, max, width, height, color, isDashed = false, strokeWidth = 1.5) {
     const points = data.map((value, index) => {
       const x = (index / (data.length - 1)) * width;
       const y = height - (value / max) * height;
       return `${x},${y}`;
     }).join(' ');
     
-    const strokeDasharray = isDashed ? 'stroke-dasharray="2,2"' : '';
+    const strokeDasharray = isDashed ? 'stroke-dasharray="4,4"' : '';
     
-    return `<polyline points="${points}" fill="none" stroke="${color}" stroke-width="1.5" ${strokeDasharray}/>`;
+    return `<polyline points="${points}" fill="none" stroke="${color}" stroke-width="${strokeWidth}" ${strokeDasharray}/>`;
   }
 
   addMessageToChat(role, content) {
@@ -412,13 +412,7 @@ class ExpediaChat {
     // Connection status indicator removed - no longer needed
   }
 
-  displayWelcomeMessage() {
-    const message = this.demoMode 
-      ? 'Welcome to the Miami Market Intelligence platform. I can help you analyze hotel performance, identify revenue opportunities, and provide strategic recommendations for your Southeast Florida territory. **Note: This is a demo version with simulated responses. The full version connects to Claude AI for real-time market intelligence.**'
-      : 'Welcome to the Miami Market Intelligence platform. I can help you analyze hotel performance, identify revenue opportunities, and provide strategic recommendations for your Southeast Florida territory. What would you like to explore?';
-    
-    this.addMessageToChat('assistant', message);
-  }
+  // Welcome message removed - using HTML version only
 
   handleWebSocketMessage(data) {
     console.log('WebSocket message:', data);
