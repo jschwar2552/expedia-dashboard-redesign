@@ -1,12 +1,12 @@
 class ExpediaChat {
   constructor() {
+    // Use local API when available, otherwise Vercel backend
     this.apiBase = window.location.hostname === 'localhost' 
       ? 'http://localhost:3000/api' 
-      : 'https://expedia-strategic-advisory-platform-pdimddb9m.vercel.app/api';
+      : 'https://expedia-strategic-advisory-platform-a47o4hudg.vercel.app/api';
     
-    this.wsUrl = window.location.hostname === 'localhost'
-      ? 'ws://localhost:3000/ws'
-      : 'wss://expedia-strategic-advisory-platform-pdimddb9m.vercel.app/ws';
+    this.wsUrl = null; // WebSocket not supported in serverless
+    this.demoMode = false;
     
     this.conversationId = 'miami-market-' + Date.now();
     this.userId = 'sarah-chen';
@@ -18,7 +18,11 @@ class ExpediaChat {
 
   async initializeApp() {
     this.setupEventListeners();
-    this.initializeWebSocket();
+    if (this.wsUrl) {
+      this.initializeWebSocket();
+    } else {
+      this.updateConnectionStatus(false);
+    }
     await this.loadInitialChartData();
     this.displayWelcomeMessage();
   }
@@ -388,7 +392,11 @@ class ExpediaChat {
   }
 
   displayWelcomeMessage() {
-    this.addMessageToChat('assistant', 'Welcome to the Miami Market Intelligence platform. I can help you analyze hotel performance, identify revenue opportunities, and provide strategic recommendations for your Southeast Florida territory. What would you like to explore?');
+    const message = this.demoMode 
+      ? 'Welcome to the Miami Market Intelligence platform. I can help you analyze hotel performance, identify revenue opportunities, and provide strategic recommendations for your Southeast Florida territory. **Note: This is a demo version with simulated responses. The full version connects to Claude AI for real-time market intelligence.**'
+      : 'Welcome to the Miami Market Intelligence platform. I can help you analyze hotel performance, identify revenue opportunities, and provide strategic recommendations for your Southeast Florida territory. What would you like to explore?';
+    
+    this.addMessageToChat('assistant', message);
   }
 
   handleWebSocketMessage(data) {
