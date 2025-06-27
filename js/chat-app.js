@@ -134,18 +134,36 @@ class ExpediaChat {
     try {
       this.showTypingIndicator();
 
-      const response = await fetch(`${this.apiBase}/quick-query`, {
+      // Temporarily use the chat endpoint until quick-query deploys
+      const quickQueries = {
+        'hotels-attention': 'Which hotels in my Southeast Florida territory need immediate attention this week based on performance metrics?',
+        'south-beach-trends': 'Show me South Beach performance trends and market opportunities for the next 30 days',
+        'revenue-optimization': 'What are the top revenue optimization opportunities across my hotel portfolio right now?',
+        'competitive-analysis': 'Provide competitive analysis comparing my territory performance vs. Marriott and Hilton properties'
+      };
+
+      const query = quickQueries[queryType] || 'Please provide market analysis for Southeast Florida territory.';
+
+      const response = await fetch(`${this.apiBase}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ queryType })
+        body: JSON.stringify({
+          message: query,
+          conversationId: this.conversationId,
+          userId: this.userId
+        })
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
 
       const data = await response.json();
       this.hideTypingIndicator();
       
-      this.addMessageToChat('user', data.query);
+      this.addMessageToChat('user', query);
       this.addMessageToChat('assistant', data.message);
       
       if (data.chartData && data.chartData.length > 0) {
