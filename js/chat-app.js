@@ -1056,12 +1056,12 @@ class ExpediaChat {
     
     return {
       timeframes: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', month],
-      revenue: [2850000, 3120000, 2980000, 3450000, 3780000, 4200000 + Math.random() * 500000],
-      occupancy: [78, 82, 79, 86, 89, 88 + Math.random() * 8],
-      adr: [285, 295, 298, 310, 325, 330 + Math.random() * 20],
-      ytd_growth: 18.7 + (Math.random() - 0.5) * 4,
+      revenue: [2850000, 3120000, 2980000, 3450000, 3780000, Math.round(4200000 + Math.random() * 500000)],
+      occupancy: [78, 82, 79, 86, 89, Math.round(88 + Math.random() * 8)],
+      adr: [285, 295, 298, 310, 325, Math.round(330 + Math.random() * 20)],
+      ytd_growth: Math.round((18.7 + (Math.random() - 0.5) * 4) * 10) / 10,
       territory_rank: Math.floor(Math.random() * 3) + 2, // 2-4
-      pipeline_health: 85 + Math.random() * 10
+      pipeline_health: Math.round(85 + Math.random() * 10)
     };
   }
   
@@ -1071,15 +1071,15 @@ class ExpediaChat {
       {
         hotel: 'Fontainebleau Miami',
         location: 'South Beach',
-        opportunity_value: 450000 + Math.random() * 100000,
-        confidence: 88 + Math.random() * 8,
+        opportunity_value: Math.round(450000 + Math.random() * 100000),
+        confidence: Math.round(88 + Math.random() * 8),
         priority: 'Critical'
       },
       {
         hotel: 'Marriott Biscayne Bay', 
         location: 'Downtown',
-        opportunity_value: 420000 + Math.random() * 80000,
-        confidence: 82 + Math.random() * 10,
+        opportunity_value: Math.round(420000 + Math.random() * 80000),
+        confidence: Math.round(82 + Math.random() * 10),
         priority: 'High'
       }
     ];
@@ -1095,13 +1095,13 @@ class ExpediaChat {
     // Generate coaching data based on performance discussion
     return {
       performance_scores: {
-        overall_performance: 85 + Math.random() * 10,
-        revenue_achievement: 90 + Math.random() * 8,
-        market_share_growth: 80 + Math.random() * 15
+        overall_performance: Math.round(85 + Math.random() * 10),
+        revenue_achievement: Math.round(90 + Math.random() * 8),
+        market_share_growth: Math.round(80 + Math.random() * 15)
       },
       kpi_tracking: {
-        revenue_target: { current: 92 + Math.random() * 6, target: 100, trend: 'up' },
-        occupancy_target: { current: 87 + Math.random() * 5, target: 85, trend: 'up' }
+        revenue_target: { current: Math.round(92 + Math.random() * 6), target: 100, trend: 'up' },
+        occupancy_target: { current: Math.round(87 + Math.random() * 5), target: 85, trend: 'up' }
       }
     };
   }
