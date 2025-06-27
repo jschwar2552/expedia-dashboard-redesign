@@ -2,11 +2,11 @@ class ExpediaChat {
   constructor() {
     this.apiBase = window.location.hostname === 'localhost' 
       ? 'http://localhost:3000/api' 
-      : 'https://your-backend-url.vercel.app/api';
+      : 'https://expedia-platform-api.vercel.app/api';
     
     this.wsUrl = window.location.hostname === 'localhost'
       ? 'ws://localhost:3000/ws'
-      : 'wss://your-backend-url.vercel.app/ws';
+      : 'wss://expedia-platform-api.vercel.app/ws';
     
     this.conversationId = 'miami-market-' + Date.now();
     this.userId = 'sarah-chen';
