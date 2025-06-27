@@ -248,9 +248,9 @@ class ExpediaChat {
     
     chartContent.innerHTML = `
       <div class="line-chart">
-        <svg class="chart-svg" viewBox="0 0 200 30">
-          ${this.generateLinePath(revenue, maxRevenue, 200, 30, '#003580')}
-          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 200, 30, '#0066cc', true)}
+        <svg class="chart-svg" viewBox="0 0 300 80" style="width: 100%; height: 80px;">
+          ${this.generateLinePath(revenue, maxRevenue, 300, 80, '#003580')}
+          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 300, 80, '#0066cc', true)}
         </svg>
       </div>
       <div class="chart-legend">
@@ -268,14 +268,14 @@ class ExpediaChat {
     const maxPotential = Math.max(...potential);
     
     const bars = hotels.map((hotel, i) => {
-      const height = (potential[i] / maxPotential) * 25;
-      const x = i * 45 + 10;
-      return `<rect x="${x}" y="${30-height}" width="35" height="${height}" fill="#003580" opacity="0.8"/>`;
+      const height = (potential[i] / maxPotential) * 60;
+      const x = i * 70 + 20;
+      return `<rect x="${x}" y="${80-height}" width="50" height="${height}" fill="#003580" opacity="0.9" rx="4"/>`;
     }).join('');
     
     chartContent.innerHTML = `
       <div class="bar-chart">
-        <svg class="chart-svg" viewBox="0 0 200 30">
+        <svg class="chart-svg" viewBox="0 0 300 80" style="width: 100%; height: 80px;">
           ${bars}
         </svg>
       </div>
