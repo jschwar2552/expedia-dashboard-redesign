@@ -377,12 +377,21 @@ class ExpediaChat {
   }
 
   formatMessage(content) {
+    // Remove JSON chart data from display
+    const cleanContent = this.removeChartDataFromContent(content);
+    
     // Basic markdown-like formatting
-    return content
+    return cleanContent
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\*(.*?)\*/g, '<em>$1</em>')
       .replace(/\n/g, '<br>')
       .replace(/`(.*?)`/g, '<code>$1</code>');
+  }
+
+  removeChartDataFromContent(content) {
+    // Remove JSON chart objects from content
+    const jsonRegex = /\{[\s\S]*?"type":\s*"(line_chart|bar_chart|market_data|coaching_metrics)"[\s\S]*?\}/g;
+    return content.replace(jsonRegex, '').trim();
   }
 
   showTypingIndicator() {
