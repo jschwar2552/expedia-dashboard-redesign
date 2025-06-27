@@ -1,33 +1,36 @@
 {
-  "version": 2,
-  "name": "expedia-strategic-advisory-platform",
-  "builds": [
-    {
-      "src": "server/index.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "server/index.js"
-    },
-    {
-      "src": "/ws",
-      "dest": "server/index.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "mockups/02-chat-interface.html"
-    }
-  ],
-  "env": {
-    "ANTHROPIC_API_KEY": "@anthropic_api_key",
-    "NODE_ENV": "production"
-  },
   "functions": {
-    "server/index.js": {
+    "api/*.js": {
       "maxDuration": 30
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods", 
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/analytics/mock-data/:chartType",
+      "destination": "/api/mock-data?chartType=:chartType"
+    },
+    {
+      "source": "/api/chat/message",
+      "destination": "/api/chat"
+    }
+  ]
 }

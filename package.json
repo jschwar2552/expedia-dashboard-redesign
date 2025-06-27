@@ -6,8 +6,6 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "build": "npm run build:frontend",
-    "build:frontend": "echo 'Frontend build complete'",
     "deploy": "gh-pages -d .",
     "test": "jest"
   },

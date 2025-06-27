@@ -20,8 +20,6 @@ class ExpediaChat {
     this.setupEventListeners();
     if (this.wsUrl) {
       this.initializeWebSocket();
-    } else {
-      this.updateConnectionStatus(false);
     }
     await this.loadInitialChartData();
     this.displayWelcomeMessage();
@@ -384,11 +382,7 @@ class ExpediaChat {
   }
 
   updateConnectionStatus(connected) {
-    const statusElement = document.getElementById('connection-status');
-    if (statusElement) {
-      statusElement.textContent = connected ? '🟢 Connected' : '🔴 Disconnected';
-      statusElement.className = connected ? 'status-connected' : 'status-disconnected';
-    }
+    // Connection status indicator removed - no longer needed
   }
 
   displayWelcomeMessage() {
