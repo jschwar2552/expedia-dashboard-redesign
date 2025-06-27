@@ -81,7 +81,7 @@ class SimpleCharts {
 
   // Method to trigger updates from chat queries with compelling storylines
   static updateFromQuery(query) {
-    console.log('📊 SimpleCharts.updateFromQuery called with:', query);
+    console.log('🏪 SimpleCharts.updateFromQuery called with:', query);
     const charts = window.simpleCharts;
     if (!charts) {
       console.warn('⚠️ window.simpleCharts not found');
@@ -89,7 +89,9 @@ class SimpleCharts {
     }
 
     const queryLower = query.toLowerCase();
-    console.log('🔍 Processing query:', queryLower);
+    console.log('🔍 Processing query lowercase:', queryLower);
+    console.log('🔍 Query includes "revenue"?', queryLower.includes('revenue'));
+    console.log('🔍 Query includes "optimization"?', queryLower.includes('optimization'));
     
     // Storyline 1: "Which hotels need attention this week?" - Crisis Management
     if (queryLower.includes('hotels') && queryLower.includes('attention')) {
@@ -469,4 +471,6 @@ class SimpleCharts {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   window.simpleCharts = new SimpleCharts();
+  window.SimpleCharts = SimpleCharts; // Make class available globally
+  console.log('✅ SimpleCharts initialized and available globally');
 });

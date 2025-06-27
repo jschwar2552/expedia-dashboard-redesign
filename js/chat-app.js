@@ -174,8 +174,11 @@ class ExpediaChat {
       this.addMessageToChat('assistant', data.message);
       
       // Always update charts for suggested queries
-      if (window.simpleCharts && typeof window.simpleCharts.constructor.updateFromQuery === 'function') {
+      if (window.SimpleCharts && typeof window.SimpleCharts.updateFromQuery === 'function') {
         console.log('🚀 Triggering chart update for query:', query);
+        window.SimpleCharts.updateFromQuery(query);
+      } else if (window.simpleCharts) {
+        console.log('🚀 Triggering chart update via instance for query:', query);
         window.simpleCharts.constructor.updateFromQuery(query);
       } else {
         console.warn('⚠️ Chart update method not available');
