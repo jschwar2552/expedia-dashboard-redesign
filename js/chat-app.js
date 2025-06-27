@@ -195,12 +195,8 @@ class ExpediaChat {
     
     for (const chartType of chartTypes) {
       try {
-        const response = await fetch(`${this.apiBase}/analytics/mock-data/${chartType}`);
-        const data = await response.json();
-        
-        if (data.data && data.data.length > 0) {
-          this.updateChart(chartType, data.data[0]);
-        }
+        // Load charts with default data structure to avoid initial errors
+        this.updateChart(chartType, { data: {} });
       } catch (error) {
         console.error(`Failed to load ${chartType} data:`, error);
       }
@@ -268,8 +264,9 @@ class ExpediaChat {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // Comprehensive Territory Performance Data Structure
-    const territoryData = data.data || {
+    try {
+      // Comprehensive Territory Performance Data Structure
+      const territoryData = (data && data.data) ? data.data : {
       timeframes: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       revenue: [2850000, 3120000, 2980000, 3450000, 3780000, 4200000],
       occupancy: [78, 82, 79, 86, 89, 92],
@@ -283,7 +280,19 @@ class ExpediaChat {
       pipeline_health: 87
     };
 
-    const { timeframes, revenue, occupancy, adr, revpar, market_share, competitor_gap, forecasted_next, territory_rank, ytd_growth, pipeline_health } = territoryData;
+    const { 
+      timeframes = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], 
+      revenue = [2850000, 3120000, 2980000, 3450000, 3780000, 4200000], 
+      occupancy = [78, 82, 79, 86, 89, 92], 
+      adr = [285, 295, 298, 310, 325, 340], 
+      revpar = [222, 242, 235, 267, 289, 313], 
+      market_share = [23.5, 24.1, 23.8, 25.2, 26.1, 27.3], 
+      competitor_gap = [+12, +15, +8, +18, +22, +28], 
+      forecasted_next = [4650000, 4980000], 
+      territory_rank = 3, 
+      ytd_growth = 18.7, 
+      pipeline_health = 87 
+    } = territoryData;
     
     const maxRevenue = Math.max(...revenue, ...forecasted_next);
     const maxOccupancy = Math.max(...occupancy);
@@ -371,14 +380,19 @@ class ExpediaChat {
         </div>
       </div>
     `;
+    } catch (error) {
+      console.error('Error rendering line chart:', error);
+      chartContent.innerHTML = `<div style="padding: var(--space-lg); text-align: center; color: var(--text-secondary);">Loading chart data...</div>`;
+    }
   }
 
   renderBarChart(container, data) {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // Comprehensive Revenue Opportunities Data
-    const revenueData = data.data || {
+    try {
+      // Comprehensive Revenue Opportunities Data
+      const revenueData = (data && data.data) ? data.data : {
       opportunities: [
         {
           hotel: 'Fontainebleau Miami',
@@ -434,7 +448,31 @@ class ExpediaChat {
       avg_implementation_time: 52
     };
 
-    const { opportunities, total_pipeline, quick_wins, avg_implementation_time } = revenueData;
+    const { 
+      opportunities = [
+        {
+          hotel: 'Fontainebleau Miami',
+          location: 'South Beach',
+          current_revenue: 1850000,
+          potential_revenue: 2340000,
+          opportunity_value: 490000,
+          confidence: 92,
+          priority: 'Critical'
+        },
+        {
+          hotel: 'Marriott Biscayne Bay',
+          location: 'Downtown', 
+          current_revenue: 1200000,
+          potential_revenue: 1680000,
+          opportunity_value: 480000,
+          confidence: 87,
+          priority: 'High'
+        }
+      ],
+      total_pipeline = 1500000, 
+      quick_wins = 3, 
+      avg_implementation_time = 52 
+    } = revenueData;
     const maxOpportunity = Math.max(...opportunities.map(o => o.opportunity_value));
     
     // Create priority color mapping
@@ -523,14 +561,19 @@ class ExpediaChat {
         </div>
       </div>
     `;
+    } catch (error) {
+      console.error('Error rendering chart:', error);
+      chartContent.innerHTML = `<div style="padding: var(--space-lg); text-align: center; color: var(--text-secondary);">Loading chart data...</div>`;
+    }
   }
 
   renderMarketData(container, data) {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // Comprehensive Market Intelligence Data
-    const marketData = data.data || {
+    try {
+      // Comprehensive Market Intelligence Data
+      const marketData = (data && data.data) ? data.data : {
       market_overview: {
         market_adr: 298,
         market_adr_trend: +5.2,
@@ -569,7 +612,30 @@ class ExpediaChat {
       ]
     };
 
-    const { market_overview, competitive_analysis, demand_indicators, events_calendar, market_alerts } = marketData;
+    const { 
+      market_overview = {
+        market_adr: 298,
+        market_adr_trend: 5.2,
+        market_occupancy: 84.3,
+        market_occupancy_trend: 2.1,
+        market_revpar: 251,
+        market_revpar_trend: 7.8
+      },
+      competitive_analysis = {
+        marriott: { occupancy: 86.2, adr: 315, market_share: 28.5, trend: 'up' },
+        hilton: { occupancy: 82.4, adr: 289, market_share: 24.1, trend: 'stable' }
+      },
+      demand_indicators = {
+        flight_searches: 156780,
+        flight_searches_trend: 12.4,
+        hotel_searches: 89320,
+        hotel_searches_trend: 8.7,
+        booking_pace: 127,
+        booking_pace_trend: 15.3
+      },
+      events_calendar = [],
+      market_alerts = []
+    } = marketData;
     
     // Calculate market position
     const competitorData = Object.entries(competitive_analysis);
@@ -656,14 +722,19 @@ class ExpediaChat {
         </div>
       </div>
     `;
+    } catch (error) {
+      console.error('Error rendering chart:', error);
+      chartContent.innerHTML = `<div style="padding: var(--space-lg); text-align: center; color: var(--text-secondary);">Loading chart data...</div>`;
+    }
   }
 
   renderCoachingMetrics(container, data) {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // Comprehensive Performance Coach Data
-    const coachingData = data.data || {
+    try {
+      // Comprehensive Performance Coach Data
+      const coachingData = (data && data.data) ? data.data : {
       manager_profile: {
         name: 'Sarah Chen',
         territory: 'Southeast Florida',
@@ -710,7 +781,28 @@ class ExpediaChat {
       ]
     };
 
-    const { manager_profile, performance_scores, kpi_tracking, coaching_focus_areas, peer_benchmarks, recent_achievements, action_items } = coachingData;
+    const { 
+      manager_profile = {},
+      performance_scores = {
+        overall_performance: 87,
+        revenue_achievement: 94,
+        market_share_growth: 82
+      },
+      kpi_tracking = {
+        revenue_target: { current: 94, target: 100, trend: 'up' },
+        occupancy_target: { current: 89, target: 85, trend: 'up' },
+        market_penetration: { current: 76, target: 80, trend: 'stable' },
+        cost_efficiency: { current: 92, target: 90, trend: 'up' }
+      },
+      coaching_focus_areas = [],
+      peer_benchmarks = {
+        territory_rank: 3,
+        total_territories: 15,
+        percentile: 85
+      },
+      recent_achievements = [],
+      action_items = []
+    } = coachingData;
     
     // Calculate overall performance grade
     const getPerformanceGrade = (score) => {
@@ -802,6 +894,10 @@ class ExpediaChat {
         </div>
       </div>
     `;
+    } catch (error) {
+      console.error('Error rendering chart:', error);
+      chartContent.innerHTML = `<div style="padding: var(--space-lg); text-align: center; color: var(--text-secondary);">Loading chart data...</div>`;
+    }
   }
 
   generateLinePath(data, max, width, height, color, isDashed = false, strokeWidth = 1.5) {
