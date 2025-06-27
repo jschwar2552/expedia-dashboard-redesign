@@ -1,3 +1,4 @@
+// Chart upgrades deployed - version 2.0
 class ExpediaChat {
   constructor() {
     // Use local API when available, otherwise Vercel backend
