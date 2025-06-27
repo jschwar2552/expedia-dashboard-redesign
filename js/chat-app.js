@@ -98,7 +98,7 @@ class ExpediaChat {
       this.addMessageToChat('user', message);
       this.showTypingIndicator();
 
-      const response = await fetch(`${this.apiBase}/chat/message`, {
+      const response = await fetch(`${this.apiBase}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ class ExpediaChat {
     } catch (error) {
       console.error('Error sending message:', error);
       this.hideTypingIndicator();
-      this.addMessageToChat('system', 'Sorry, I encountered an error. Please try again.');
+      this.addMessageToChat('system', `Error: ${error.message || 'Unknown error occurred'}`);
     }
   }
 
@@ -134,7 +134,7 @@ class ExpediaChat {
     try {
       this.showTypingIndicator();
 
-      const response = await fetch(`${this.apiBase}/chat/quick-query`, {
+      const response = await fetch(`${this.apiBase}/quick-query`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ class ExpediaChat {
     } catch (error) {
       console.error('Error handling quick query:', error);
       this.hideTypingIndicator();
-      this.addMessageToChat('system', 'Sorry, I encountered an error processing your query.');
+      this.addMessageToChat('system', `Error processing query: ${error.message || 'Unknown error occurred'}`);
     }
   }
 
