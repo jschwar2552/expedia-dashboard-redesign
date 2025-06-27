@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedia Strategic Advisory Platform - Analytics Mockup</title>
+    
+    <!-- Design System Stylesheets -->
+    <link rel="stylesheet" href="../design-system/colors.css">
+    <link rel="stylesheet" href="../design-system/typography.css">
+    <link rel="stylesheet" href="../design-system/layout.css">
+    <link rel="stylesheet" href="../design-system/components.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--gray-50);
+            font-family: var(--expedia-font-primary);
+        }
+        
+        /* Header */
+        .header-strip {
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-lg) 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .expedia-logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .expedia-main {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            letter-spacing: -0.02em;
+        }
+        
+        .expedia-group {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+            margin-top: -2px;
+        }
+        
+        .platform-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            opacity: 0.9;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            padding-left: var(--space-lg);
+            margin-left: var(--space-lg);
+        }
+        
+        .user-info {
+            text-align: right;
+            color: white;
+        }
+        
+        .user-name {
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .user-territory {
+            font-size: var(--text-sm);
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: var(--space-3xl);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--space-4xl);
+        }
+        
+        .page-title {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .page-subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Analytics Grid */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            margin-bottom: var(--space-4xl);
+        }
+        
+        .analytics-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--gray-100);
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--expedia-blue);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+        }
+        
+        .card-title {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+        }
+        
+        .chart-area {
+            height: 300px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Chart 1: Territory Portfolio Health */
+        .portfolio-chart {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: var(--space-lg);
+        }
+        
+        .portfolio-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: var(--space-md);
+            background: white;
+            border-radius: var(--radius-md);
+        }
+        
+        .metric-value {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .metric-label {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .priority-list {
+            flex: 1;
+            background: white;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+        }
+        
+        .priority-title {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-md);
+        }
+        
+        .priority-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .priority-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hotel-name {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            color: var(--text-primary);
+        }
+        
+        .priority-status {
+            font-size: var(--text-xs);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            background: var(--error-red-light);
+            color: var(--error-red);
+            font-weight: var(--font-medium);
+        }
+        
+        /* Chart 2: Revenue Performance Bar Chart */
+        .revenue-chart {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: var(--space-lg);
+        }
+        
+        .chart-legend {
+            display: flex;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--text-sm);
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .legend-color.hotel {
+            background: var(--expedia-blue);
+        }
+        
+        .legend-color.market {
+            background: var(--gray-400);
+        }
+        
+        .bar-chart {
+            flex: 1;
+            display: flex;
+            align-items: end;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            background: white;
+            border-radius: var(--radius-md);
+        }
+        
+        .bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .bars {
+            display: flex;
+            gap: var(--space-xs);
+            align-items: end;
+            height: 150px;
+        }
+        
+        .bar {
+            width: 24px;
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        }
+        
+        .bar.hotel {
+            background: var(--expedia-blue);
+            height: 78%;
+        }
+        
+        .bar.market {
+            background: var(--gray-400);
+            height: 85%;
+        }
+        
+        .bar-label {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* Chart 3: Priority Alerts Table */
+        .alerts-chart {
+            height: 100%;
+            padding: var(--space-lg);
+        }
+        
+        .alerts-table {
+            background: white;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .table-header {
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-md) var(--space-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-md);
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+        }
+        
+        .table-row {
+            padding: var(--space-md) var(--space-lg);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: var(--space-md);
+            border-bottom: 1px solid var(--gray-100);
+            font-size: var(--text-sm);
+            align-items: center;
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        .alert-level {
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            text-align: center;
+        }
+        
+        .alert-level.high {
+            background: var(--error-red-light);
+            color: var(--error-red);
+        }
+        
+        .alert-level.medium {
+            background: var(--warning-orange-light);
+            color: var(--warning-orange);
+        }
+        
+        .revenue-impact {
+            font-weight: var(--font-semibold);
+            color: var(--expedia-blue);
+        }
+        
+        /* Chart 4: Market Intelligence Timeline */
+        .market-chart {
+            height: 100%;
+            padding: var(--space-lg);
+        }
+        
+        .timeline {
+            background: white;
+            border-radius: var(--radius-md);
+            height: 100%;
+            padding: var(--space-lg);
+            overflow-y: auto;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-lg);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .timeline-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-lg);
+            flex-shrink: 0;
+        }
+        
+        .timeline-icon.event {
+            background: var(--expedia-blue);
+            color: white;
+        }
+        
+        .timeline-icon.weather {
+            background: var(--info-blue-light);
+            color: var(--info-blue);
+        }
+        
+        .timeline-icon.trend {
+            background: var(--success-green-light);
+            color: var(--success-green);
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .timeline-title {
+            font-size: var(--text-sm);
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .timeline-description {
+            font-size: var(--text-xs);
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+        }
+        
+        .impact-badge {
+            display: inline-block;
+            background: var(--success-green-light);
+            color: var(--success-green);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--text-xs);
+            font-weight: var(--font-medium);
+            margin-top: var(--space-xs);
+        }
+        
+        /* Summary Section */
+        .summary-section {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--space-3xl);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+        
+        .summary-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .summary-text {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .analytics-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+            
+            .chart-area {
+                height: 250px;
+            }
+            
+            .portfolio-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-strip">
+        <div class="container">
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: var(--space-lg);">
+                    <div class="expedia-logo">
+                        <span class="expedia-main">expedia</span>
+                        <span class="expedia-group">GROUP</span>
+                    </div>
+                    <div class="platform-title">Strategic Advisory Platform</div>
+                </div>
+                
+                <div class="user-info">
+                    <div class="user-name">Sarah Chen</div>
+                    <div class="user-territory">Southeast Florida Territory</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Live Analytics Dashboard Mockup</h1>
+            <p class="page-subtitle">
+                Detailed view of how each of the 4 core analytics will look when populated with real data and charts
+            </p>
+        </div>
+
+        <!-- Analytics Grid -->
+        <div class="analytics-grid">
+            <!-- Chart 1: Territory Portfolio Health -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <div class="card-icon">📍</div>
+                    <div class="card-title">Territory Portfolio Health</div>
+                </div>
+                <div class="chart-area">
+                    <div class="portfolio-chart">
+                        <div class="portfolio-metrics">
+                            <div class="metric-item">
+                                <div class="metric-value">142</div>
+                                <div class="metric-label">Total Hotels</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">78%</div>
+                                <div class="metric-label">Avg Occupancy</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">12</div>
+                                <div class="metric-label">Need Attention</div>
+                            </div>
+                        </div>
+                        <div class="priority-list">
+                            <div class="priority-title">Hotels Requiring Action</div>
+                            <div class="priority-item">
+                                <div class="hotel-name">Miami Bayfront Resort</div>
+                                <div class="priority-status">HIGH</div>
+                            </div>
+                            <div class="priority-item">
+                                <div class="hotel-name">Coral Gables Inn</div>
+                                <div class="priority-status">MEDIUM</div>
+                            </div>
+                            <div class="priority-item">
+                                <div class="hotel-name">Fort Lauderdale Suites</div>
+                                <div class="priority-status">HIGH</div>
+                            </div>
+                            <div class="priority-item">
+                                <div class="hotel-name">Key Biscayne Resort</div>
+                                <div class="priority-status">MEDIUM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart 2: Revenue Performance vs Market -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Revenue Performance vs Market</div>
+                </div>
+                <div class="chart-area">
+                    <div class="revenue-chart">
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color hotel"></div>
+                                <span>Miami Bayfront Resort</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color market"></div>
+                                <span>Market Average</span>
+                            </div>
+                        </div>
+                        <div class="bar-chart">
+                            <div class="bar-group">
+                                <div class="bars">
+                                    <div class="bar hotel"></div>
+                                    <div class="bar market"></div>
+                                </div>
+                                <div class="bar-label">Occupancy<br>78% vs 85%</div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bars">
+                                    <div class="bar hotel" style="height: 92%;"></div>
+                                    <div class="bar market" style="height: 88%;"></div>
+                                </div>
+                                <div class="bar-label">ADR<br>$189 vs $185</div>
+                            </div>
+                            <div class="bar-group">
+                                <div class="bars">
+                                    <div class="bar hotel" style="height: 74%;"></div>
+                                    <div class="bar market" style="height: 82%;"></div>
+                                </div>
+                                <div class="bar-label">RevPAR<br>$148 vs $157</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart 3: Priority Alerts & Action Items -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <div class="card-icon">🚨</div>
+                    <div class="card-title">Priority Alerts & Action Items</div>
+                </div>
+                <div class="chart-area">
+                    <div class="alerts-chart">
+                        <div class="alerts-table">
+                            <div class="table-header">
+                                <div>Issue</div>
+                                <div>Priority</div>
+                                <div>Revenue Impact</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Weekend rates 7% below market average</div>
+                                <div><span class="alert-level high">HIGH</span></div>
+                                <div class="revenue-impact">+$24K/month</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Spa package conversion rate declining</div>
+                                <div><span class="alert-level medium">MEDIUM</span></div>
+                                <div class="revenue-impact">+$8K/month</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Business traveler segment underperforming</div>
+                                <div><span class="alert-level high">HIGH</span></div>
+                                <div class="revenue-impact">+$15K/month</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Guest WiFi satisfaction scores low</div>
+                                <div><span class="alert-level medium">MEDIUM</span></div>
+                                <div class="revenue-impact">+$5K/month</div>
+                            </div>
+                            <div class="table-row">
+                                <div>Check-in process causing delays</div>
+                                <div><span class="alert-level medium">MEDIUM</span></div>
+                                <div class="revenue-impact">+$3K/month</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart 4: Market Intelligence Dashboard -->
+            <div class="analytics-card">
+                <div class="card-header">
+                    <div class="card-icon">🌊</div>
+                    <div class="card-title">Market Intelligence Dashboard</div>
+                </div>
+                <div class="chart-area">
+                    <div class="market-chart">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-icon event">🎨</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Art Basel Miami Beach - Dec 6-8</div>
+                                    <div class="timeline-description">
+                                        Major art festival expected to drive 85% demand surge. Recommend implementing 3-night minimum stays and premium pricing tiers.
+                                    </div>
+                                    <span class="impact-badge">High Impact Event</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon weather">🌧️</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Rain Forecast Thu-Fri</div>
+                                    <div class="timeline-description">
+                                        70% chance of precipitation. Perfect opportunity to promote spa packages and indoor amenities to drive ancillary revenue.
+                                    </div>
+                                    <span class="impact-badge">Marketing Opportunity</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon trend">📈</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Flight Search Volume +40%</div>
+                                    <div class="timeline-description">
+                                        Miami flight searches trending upward for next month. Indicates strong forward demand - consider rate increases for late bookings.
+                                    </div>
+                                    <span class="impact-badge">Demand Signal</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-icon event">🏀</div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Miami Heat Playoffs Schedule</div>
+                                    <div class="timeline-description">
+                                        Playoff games at AmericanAirlines Arena will impact downtown hotel demand. Monitor bookings for game night premiums.
+                                    </div>
+                                    <span class="impact-badge">Sports Impact</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-section">
+            <h2 class="summary-title">How This Works</h2>
+            <p class="summary-text">
+                When users ask questions in the chat interface, these 4 analytics views will automatically update to show relevant data. 
+                For example, asking "Which hotels need attention?" would highlight specific properties in the Portfolio Health view, 
+                while "Show me revenue opportunities" would update the Performance chart with actionable insights.
+            </p>
+        </div>
+    </main>
+</body>
+</html>

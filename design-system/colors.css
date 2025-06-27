@@ -1,0 +1,59 @@
+/* Expedia Strategic Advisory Platform - Color System */
+
+:root {
+  /* Primary Brand Colors */
+  --expedia-blue: #003580;
+  --expedia-blue-dark: #002659;
+  --expedia-blue-light: #1a4fa0;
+  --expedia-yellow: #ffcc02;
+  --expedia-yellow-dark: #e6b800;
+  
+  /* Secondary Colors */
+  --expedia-navy: #1a365d;
+  --expedia-slate: #475569;
+  --expedia-gray-blue: #64748b;
+  
+  /* Neutral Grays */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  /* Semantic Colors */
+  --success-green: #10b981;
+  --success-green-light: #d1fae5;
+  --warning-orange: #f59e0b;
+  --warning-orange-light: #fef3c7;
+  --error-red: #ef4444;
+  --error-red-light: #fee2e2;
+  --info-blue: #3b82f6;
+  --info-blue-light: #dbeafe;
+  
+  /* Text Colors */
+  --text-primary: var(--gray-900);
+  --text-secondary: var(--gray-600);
+  --text-tertiary: var(--gray-500);
+  --text-inverse: #ffffff;
+  
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--gray-50);
+  --bg-tertiary: var(--gray-100);
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  
+  /* Border Colors */
+  --border-light: var(--gray-200);
+  --border-medium: var(--gray-300);
+  --border-dark: var(--gray-400);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--expedia-blue) 0%, var(--expedia-navy) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--expedia-blue-light) 0%, var(--expedia-blue-dark) 100%);
+  --gradient-subtle: linear-gradient(135deg, rgba(0, 53, 128, 0.03) 0%, rgba(26, 54, 93, 0.03) 100%);
+}

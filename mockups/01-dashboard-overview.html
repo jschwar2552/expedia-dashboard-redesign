@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expedia Strategic Advisory Platform - Miami Market Dashboard</title>
+    
+    <!-- Design System Stylesheets -->
+    <link rel="stylesheet" href="../design-system/colors.css">
+    <link rel="stylesheet" href="../design-system/typography.css">
+    <link rel="stylesheet" href="../design-system/layout.css">
+    <link rel="stylesheet" href="../design-system/components.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            font-family: var(--expedia-font-primary);
+        }
+        
+        /* Expedia Blue Header Strip */
+        .header-strip {
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-lg) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-strip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+        
+        .expedia-logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .expedia-main {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            letter-spacing: -0.02em;
+        }
+        
+        .expedia-group {
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+            margin-top: -2px;
+        }
+        
+        .platform-title {
+            font-size: var(--text-lg);
+            font-weight: var(--font-medium);
+            opacity: 0.9;
+            border-left: 1px solid rgba(255,255,255,0.3);
+            padding-left: var(--space-lg);
+        }
+        
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2xl);
+        }
+        
+        .role-toggle {
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xs);
+            display: flex;
+        }
+        
+        .role-option {
+            padding: var(--space-sm) var(--space-lg);
+            border: none;
+            background: none;
+            color: rgba(255,255,255,0.7);
+            font-weight: var(--font-medium);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .role-option.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .user-info {
+            text-align: right;
+            color: white;
+        }
+        
+        .user-name {
+            font-weight: var(--font-semibold);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .user-territory {
+            font-size: var(--text-sm);
+            opacity: 0.8;
+        }
+        
+        /* Hero Section with Miami Theme */
+        .hero-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: var(--space-6xl) 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-sm) var(--space-xl);
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            font-weight: var(--font-medium);
+            margin-bottom: var(--space-xl);
+            text-transform: uppercase;
+            letter-spacing: var(--tracking-wide);
+        }
+        
+        .hero-title {
+            font-size: var(--text-5xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-xl);
+            line-height: var(--leading-tight);
+        }
+        
+        .hero-subtitle {
+            font-size: var(--text-xl);
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4xl);
+            line-height: var(--leading-relaxed);
+        }
+        
+        /* Miami Market Metrics */
+        .metrics-section {
+            padding: var(--space-5xl) 0;
+            background: white;
+        }
+        
+        .metrics-header {
+            text-align: center;
+            margin-bottom: var(--space-4xl);
+        }
+        
+        .section-title {
+            font-size: var(--text-3xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-subtitle {
+            font-size: var(--text-lg);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .metric-card {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-3xl);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--expedia-blue);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--expedia-blue);
+        }
+        
+        .metric-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--expedia-blue);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-lg);
+            color: white;
+            font-size: var(--text-xl);
+            font-weight: var(--font-bold);
+        }
+        
+        .metric-value {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-bold);
+            color: var(--expedia-blue);
+            margin-bottom: var(--space-sm);
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .metric-label {
+            font-size: var(--text-lg);
+            color: var(--text-primary);
+            font-weight: var(--font-medium);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .metric-change {
+            font-size: var(--text-sm);
+            color: var(--success-green);
+            font-weight: var(--font-medium);
+        }
+        
+        /* Platform Features */
+        .features-section {
+            padding: var(--space-6xl) 0;
+            background: var(--gray-50);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-4xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--radius-xl);
+            padding: var(--space-4xl);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--expedia-blue);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--expedia-blue);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-xl);
+            color: white;
+            font-size: var(--text-2xl);
+        }
+        
+        .feature-title {
+            font-size: var(--text-xl);
+            font-weight: var(--font-semibold);
+            color: var(--text-primary);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: var(--leading-relaxed);
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .btn-primary {
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-md) var(--space-2xl);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            background: var(--expedia-blue-dark);
+            transform: translateY(-1px);
+        }
+        
+        /* Call to Action */
+        .cta-section {
+            background: var(--expedia-blue);
+            color: white;
+            padding: var(--space-6xl) 0;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: var(--text-4xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .cta-subtitle {
+            font-size: var(--text-xl);
+            opacity: 0.9;
+            margin-bottom: var(--space-3xl);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: var(--space-md) var(--space-2xl);
+            border: 2px solid white;
+            border-radius: var(--radius-md);
+            font-weight: var(--font-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--expedia-blue);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: var(--gray-400);
+            padding: var(--space-4xl) 0;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: var(--space-xl);
+                text-align: center;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: var(--space-md);
+            }
+            
+            .platform-title {
+                border-left: none;
+                border-top: 1px solid rgba(255,255,255,0.3);
+                padding-left: 0;
+                padding-top: var(--space-md);
+            }
+            
+            .user-section {
+                flex-direction: column;
+                gap: var(--space-lg);
+            }
+            
+            .hero-title {
+                font-size: var(--text-4xl);
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-2xl);
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Expedia Blue Header Strip -->
+    <header class="header-strip">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="expedia-logo">
+                        <span class="expedia-main">expedia</span>
+                        <span class="expedia-group">GROUP</span>
+                    </div>
+                    <div class="platform-title">Strategic Advisory Platform</div>
+                </div>
+                
+                <div class="user-section">
+                    <div class="role-toggle">
+                        <button class="role-option active">Market Manager</button>
+                        <button class="role-option">Hotel Owner</button>
+                    </div>
+                    
+                    <div class="user-info">
+                        <div class="user-name">Sarah Chen</div>
+                        <div class="user-territory">Southeast Florida Territory</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">Miami Market Intelligence</div>
+                <h1 class="hero-title">AI-Powered Strategic Advisory</h1>
+                <p class="hero-subtitle">
+                    Intelligent consultation workflow automation for Market Managers and Hotel Partners in the dynamic Miami hospitality landscape. Optimize revenue, enhance market positioning, and drive strategic decisions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Miami Market Metrics -->
+    <section class="metrics-section">
+        <div class="container">
+            <div class="metrics-header">
+                <h2 class="section-title">Miami Market Performance</h2>
+                <p class="section-subtitle">
+                    Real-time insights and performance indicators for the Southeast Florida territory
+                </p>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">▲</div>
+                    <div class="metric-value">142</div>
+                    <div class="metric-label">Active Hotels</div>
+                    <div class="metric-change">+12% this month</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">◆</div>
+                    <div class="metric-value">$2.4M</div>
+                    <div class="metric-label">Revenue Impact</div>
+                    <div class="metric-change">+18% year over year</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">●</div>
+                    <div class="metric-value">94%</div>
+                    <div class="metric-label">Satisfaction Rate</div>
+                    <div class="metric-change">+3% this quarter</div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">■</div>
+                    <div class="metric-value">23min</div>
+                    <div class="metric-label">Avg Response Time</div>
+                    <div class="metric-change">45% improvement</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features -->
+    <section class="features-section">
+        <div class="container">
+            <div class="metrics-header">
+                <h2 class="section-title">Platform Capabilities</h2>
+                <p class="section-subtitle">
+                    Comprehensive tools designed for Miami's unique hospitality market dynamics
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">◉</div>
+                    <h3 class="feature-title">Market Intelligence</h3>
+                    <p class="feature-description">
+                        Real-time analysis of Miami's competitive landscape, seasonal trends, and revenue optimization opportunities.
+                    </p>
+                    <a href="#" class="btn-primary">Explore Markets</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">▣</div>
+                    <h3 class="feature-title">Hotel Performance</h3>
+                    <p class="feature-description">
+                        Comprehensive analytics for beachfront properties, urban hotels, and luxury resorts across Southeast Florida.
+                    </p>
+                    <a href="#" class="btn-primary">View Analytics</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">◎</div>
+                    <h3 class="feature-title">AI Consultation</h3>
+                    <p class="feature-description">
+                        Interactive AI-powered sessions with dynamic reports, custom calculators, and Miami-specific recommendations.
+                    </p>
+                    <a href="#" class="btn-primary">Start Session</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">◈</div>
+                    <h3 class="feature-title">Seasonal Optimization</h3>
+                    <p class="feature-description">
+                        Advanced strategies for Miami's peak season, Art Basel, and year-round demand patterns.
+                    </p>
+                    <a href="#" class="btn-primary">Optimize Revenue</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">◐</div>
+                    <h3 class="feature-title">Partnership Management</h3>
+                    <p class="feature-description">
+                        Streamlined partner onboarding and relationship management for South Beach, Downtown, and Airport corridor properties.
+                    </p>
+                    <a href="#" class="btn-primary">Manage Partners</a>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">◇</div>
+                    <h3 class="feature-title">Executive Reporting</h3>
+                    <p class="feature-description">
+                        C-suite dashboards with Miami market insights, competitive intelligence, and strategic recommendations.
+                    </p>
+                    <a href="#" class="btn-primary">View Reports</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Transform Miami Strategy?</h2>
+            <p class="cta-subtitle">
+                Start leveraging AI-powered insights to optimize your market performance and drive revenue growth in Southeast Florida's dynamic hospitality market.
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-secondary">Get Started</a>
+                <a href="#" class="btn-secondary">Schedule Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Expedia Group Strategic Advisory Platform • Miami Market Intelligence • Powered by Claude AI</p>
+        </div>
+    </footer>
+</body>
+</html>
