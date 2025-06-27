@@ -184,12 +184,11 @@ class SimpleCharts {
         
         <!-- Growth Trend Chart -->
         <div style="background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 8px rgba(0,53,128,0.08); height: 100px;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 12px; text-align: center;">${this.data.trend}</div>
-          
           <!-- Simple Monthly Progress -->
-          <div style="display: flex; align-items: end; justify-content: space-between; height: 50px; padding: 0 10px;">
+          <div style="display: flex; align-items: end; justify-content: space-between; height: 50px; padding: 0 10px; margin-bottom: 8px;">
             ${this.generateChartBars()}
           </div>
+          <div style="font-size: 12px; font-weight: 600; color: #666; text-align: center;">${this.data.trend}</div>
         </div>
       </div>
     `;
