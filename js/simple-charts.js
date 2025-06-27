@@ -172,23 +172,21 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Strong growth momentum building through 2024
+    // STORY: Clean revenue focus
     chartContent.innerHTML = `
-      <div style="height: 200px; padding: 16px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
-        <!-- Big Story -->
-        <div style="text-align: center; margin-bottom: 16px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
-          <div style="font-size: 28px; font-weight: 700; color: #28a745; margin-bottom: 4px;">${this.data.revenue}</div>
-          <div style="font-size: 14px; color: #666; margin-bottom: 8px;">June 2024 Revenue</div>
-          <div style="font-size: 16px; font-weight: 600; color: #28a745;">${this.data.growth} Growth YTD</div>
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%); overflow-y: auto;">
+        <!-- Main Metric -->
+        <div style="text-align: center; margin-bottom: 12px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
+          <div style="font-size: 32px; font-weight: 700; color: #28a745; margin-bottom: 2px;">${this.data.revenue}</div>
+          <div style="font-size: 13px; color: #666;">June Revenue • ${this.data.growth} YTD</div>
         </div>
         
-        <!-- Growth Trend Chart -->
-        <div style="background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 8px rgba(0,53,128,0.08); height: 100px;">
-          <!-- Simple Monthly Progress -->
-          <div style="display: flex; align-items: end; justify-content: space-between; height: 50px; padding: 0 10px; margin-bottom: 8px;">
+        <!-- Simple Trend -->
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
+          <div style="display: flex; align-items: end; justify-content: space-between; height: 40px; margin-bottom: 8px;">
             ${this.generateChartBars()}
           </div>
-          <div style="font-size: 12px; font-weight: 600; color: #666; text-align: center;">${this.data.trend}</div>
+          <div style="font-size: 11px; color: #666; text-align: center;">Jan-Jun Growth Trajectory</div>
         </div>
       </div>
     `;
@@ -201,32 +199,24 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Focus on the biggest opportunity
+    // STORY: Clear opportunity focus
     chartContent.innerHTML = `
-      <div style="height: 220px; padding: 16px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);">
-        <!-- Biggest Opportunity -->
-        <div style="text-align: center; margin-bottom: 16px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(253,126,20,0.08);">
-          <div style="font-size: 28px; font-weight: 700; color: #fd7e14; margin-bottom: 4px;">${this.data.biggestWin}</div>
-          <div style="font-size: 14px; color: #666; margin-bottom: 8px;">Biggest Revenue Opportunity</div>
-          <div style="font-size: 16px; font-weight: 600; color: #003580;">${this.data.topHotel}</div>
+      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%); overflow-y: auto;">
+        <!-- Top Opportunity -->
+        <div style="text-align: center; margin-bottom: 12px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(253,126,20,0.08);">
+          <div style="font-size: 32px; font-weight: 700; color: #fd7e14; margin-bottom: 2px;">${this.data.biggestWin}</div>
+          <div style="font-size: 13px; color: #666;">Top Opportunity • ${this.data.topHotel}</div>
         </div>
         
-        <!-- Action Steps -->
-        <div style="background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 8px rgba(253,126,20,0.08); height: 120px;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 12px;">Next Steps to Capture</div>
-          
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
-              <div style="background: #28a745; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">1</div>
-              <div style="font-size: 12px; color: #333;">Rate optimization for summer season</div>
+        <!-- Actions -->
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(253,126,20,0.08);">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">Action Plan</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #28a745;">
+              1. Summer rate optimization
             </div>
-            <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #fd7e14;">
-              <div style="background: #fd7e14; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">2</div>
-              <div style="font-size: 12px; color: #333;">Group sales push for Q3 events</div>
-            </div>
-            <div style="display: flex; align-items: center; gap: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #003580;">
-              <div style="background: #003580; color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">3</div>
-              <div style="font-size: 12px; color: #333;">Digital marketing campaign boost</div>
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #fd7e14;">
+              2. Q3 group sales push
             </div>
           </div>
         </div>
@@ -241,28 +231,24 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Summer season is driving strong demand
+    // STORY: Market opportunity focus
     chartContent.innerHTML = `
-      <div style="height: 200px; padding: 16px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
-        <!-- Key Market Driver -->
-        <div style="text-align: center; margin-bottom: 16px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(102,51,153,0.08);">
-          <div style="font-size: 28px; font-weight: 700; color: #fd7e14; margin-bottom: 4px;">🌞 Summer Peak</div>
-          <div style="font-size: 14px; color: #666; margin-bottom: 8px;">Market Opportunity</div>
-          <div style="font-size: 16px; font-weight: 600; color: #28a745;">+85% tourism demand surge</div>
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%); overflow-y: auto;">
+        <!-- Main Market Signal -->
+        <div style="text-align: center; margin-bottom: 12px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(102,51,153,0.08);">
+          <div style="font-size: 32px; font-weight: 700; color: #fd7e14; margin-bottom: 2px;">+85%</div>
+          <div style="font-size: 13px; color: #666;">Summer Demand Surge</div>
         </div>
         
-        <!-- Market Conditions -->
-        <div style="background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 8px rgba(102,51,153,0.08); height: 100px;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 12px;">Perfect Conditions Aligned</div>
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-            <div style="padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #fd7e14;">
-              <div style="font-size: 11px; font-weight: 600; color: #333;">🌤️ Weather</div>
-              <div style="font-size: 10px; color: #666;">Perfect 82°F beach weather</div>
+        <!-- Conditions -->
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(102,51,153,0.08);">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">Market Drivers</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #fd7e14;">
+              🌤️ Perfect 82°F weather
             </div>
-            <div style="padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
-              <div style="font-size: 11px; font-weight: 600; color: #333;">🎉 Events</div>
-              <div style="font-size: 10px; color: #666;">Summer festivals driving demand</div>
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #28a745;">
+              🎉 Summer festival season
             </div>
           </div>
         </div>
@@ -277,32 +263,24 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Strong performance with one key improvement area
+    // STORY: Performance grade with focus area
     chartContent.innerHTML = `
-      <div style="height: 220px; padding: 16px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%);">
-        <!-- Performance Grade -->
-        <div style="text-align: center; margin-bottom: 16px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(40,167,69,0.08);">
-          <div style="font-size: 28px; font-weight: 700; color: #28a745; margin-bottom: 4px;">A- Grade</div>
-          <div style="font-size: 14px; color: #666; margin-bottom: 8px;">Overall Performance</div>
-          <div style="font-size: 16px; font-weight: 600; color: #003580;">#3 of 15 territories</div>
+      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); overflow-y: auto;">
+        <!-- Grade -->
+        <div style="text-align: center; margin-bottom: 12px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(40,167,69,0.08);">
+          <div style="font-size: 32px; font-weight: 700; color: #28a745; margin-bottom: 2px;">A-</div>
+          <div style="font-size: 13px; color: #666;">Performance Grade • #3 of 15</div>
         </div>
         
-        <!-- Key Coaching Focus -->
-        <div style="background: white; border-radius: 8px; padding: 16px; box-shadow: 0 2px 8px rgba(40,167,69,0.08); height: 120px;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 12px;">🎯 Focus on Group Sales</div>
-          
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #dc3545;">
-              <div style="font-size: 12px; font-weight: 600; color: #333;">Group Sales Strategy</div>
-              <div style="font-size: 10px; color: #666;">65% of target - needs improvement</div>
+        <!-- Focus Area -->
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(40,167,69,0.08);">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">🎯 Improvement Focus</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #dc3545;">
+              Group Sales: 65% of target
             </div>
-            <div style="padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
-              <div style="font-size: 12px; font-weight: 600; color: #333;">Revenue Growth</div>
-              <div style="font-size: 10px; color: #666;">+18.7% YTD - exceeding expectations</div>
-            </div>
-            <div style="padding: 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
-              <div style="font-size: 12px; font-weight: 600; color: #333;">Digital Marketing</div>
-              <div style="font-size: 10px; color: #666;">82% ROI - strong performance</div>
+            <div style="font-size: 11px; padding: 6px; background: #f8f9fa; border-radius: 3px; border-left: 2px solid #28a745;">
+              Revenue: +18.7% (exceeding)
             </div>
           </div>
         </div>
