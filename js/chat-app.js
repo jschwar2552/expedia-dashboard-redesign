@@ -3,7 +3,7 @@ class ExpediaChat {
     // Use local API when available, otherwise Vercel backend
     this.apiBase = window.location.hostname === 'localhost' 
       ? 'http://localhost:3000/api' 
-      : 'https://expedia-strategic-advisory-platform-a47o4hudg.vercel.app/api';
+      : 'https://expedia-strategic-advisory-platform-g7veowjpo.vercel.app/api';
     
     this.wsUrl = null; // WebSocket not supported in serverless
     this.demoMode = false;
