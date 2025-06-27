@@ -22,7 +22,7 @@ class ExpediaChat {
       this.initializeWebSocket();
     }
     await this.loadInitialChartData();
-    this.displayWelcomeMessage();
+    // Welcome message already exists in HTML, don't duplicate
   }
 
   setupEventListeners() {
@@ -248,9 +248,9 @@ class ExpediaChat {
     
     chartContent.innerHTML = `
       <div class="line-chart">
-        <svg class="chart-svg" viewBox="0 0 300 80" style="width: 100%; height: 80px;">
-          ${this.generateLinePath(revenue, maxRevenue, 300, 80, '#003580')}
-          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 300, 80, '#0066cc', true)}
+        <svg class="chart-svg" viewBox="0 0 400 120" style="width: 100%; height: 140px;">
+          ${this.generateLinePath(revenue, maxRevenue, 400, 120, '#003580')}
+          ${this.generateLinePath(occupancy.map(x => x * 1000), maxRevenue, 400, 120, '#0066cc', true)}
         </svg>
       </div>
       <div class="chart-legend">
@@ -268,14 +268,14 @@ class ExpediaChat {
     const maxPotential = Math.max(...potential);
     
     const bars = hotels.map((hotel, i) => {
-      const height = (potential[i] / maxPotential) * 60;
-      const x = i * 70 + 20;
-      return `<rect x="${x}" y="${80-height}" width="50" height="${height}" fill="#003580" opacity="0.9" rx="4"/>`;
+      const height = (potential[i] / maxPotential) * 100;
+      const x = i * 90 + 30;
+      return `<rect x="${x}" y="${120-height}" width="60" height="${height}" fill="#003580" opacity="0.9" rx="6"/>`;
     }).join('');
     
     chartContent.innerHTML = `
       <div class="bar-chart">
-        <svg class="chart-svg" viewBox="0 0 300 80" style="width: 100%; height: 80px;">
+        <svg class="chart-svg" viewBox="0 0 400 120" style="width: 100%; height: 140px;">
           ${bars}
         </svg>
       </div>
@@ -293,22 +293,22 @@ class ExpediaChat {
     const { competitor_occupancy, market_adr, flight_searches, booking_pace } = data.data;
     
     chartContent.innerHTML = `
-      <div class="market-metrics">
-        <div class="metric-row">
+      <div class="market-metrics" style="display: flex; flex-direction: column; gap: var(--space-md); height: 100%;">
+        <div class="metric-row" style="padding: var(--space-md); font-size: 14px;">
           <span class="metric-label">Market ADR</span>
-          <span class="metric-value">$${market_adr}</span>
+          <span class="metric-value" style="font-size: 20px; font-weight: bold;">$${market_adr}</span>
         </div>
-        <div class="metric-row">
+        <div class="metric-row" style="padding: var(--space-md); font-size: 14px;">
           <span class="metric-label">Competitor Occ</span>
-          <span class="metric-value">${competitor_occupancy}%</span>
+          <span class="metric-value" style="font-size: 20px; font-weight: bold;">${competitor_occupancy}%</span>
         </div>
-        <div class="metric-row">
+        <div class="metric-row" style="padding: var(--space-md); font-size: 14px;">
           <span class="metric-label">Flight Searches</span>
-          <span class="metric-value trend-up">${flight_searches}</span>
+          <span class="metric-value trend-up" style="font-size: 20px; font-weight: bold;">${flight_searches}</span>
         </div>
-        <div class="metric-row">
+        <div class="metric-row" style="padding: var(--space-md); font-size: 14px;">
           <span class="metric-label">Booking Pace</span>
-          <span class="metric-value trend-up">${booking_pace}</span>
+          <span class="metric-value trend-up" style="font-size: 20px; font-weight: bold;">${booking_pace}</span>
         </div>
       </div>
     `;
@@ -321,21 +321,21 @@ class ExpediaChat {
     const { territory_growth, vs_peer_avg, optimization_score, weekly_calls } = data.data;
     
     chartContent.innerHTML = `
-      <div class="coaching-metrics">
-        <div class="score-display">
-          <div class="score-circle">
+      <div class="coaching-metrics" style="padding: var(--space-lg); height: 100%;">
+        <div class="score-display" style="text-align: center; margin-bottom: var(--space-lg);">
+          <div class="score-circle" style="width: 60px; height: 60px; font-size: 18px; margin: 0 auto;">
             <span class="score-number">${optimization_score}</span>
           </div>
-          <div class="score-label">Optimization Score</div>
+          <div class="score-label" style="font-size: 12px; margin-top: var(--space-sm);">Optimization Score</div>
         </div>
-        <div class="performance-stats">
-          <div class="stat-item">
-            <span class="stat-value trend-up">${territory_growth}</span>
-            <span class="stat-label">Territory Growth</span>
+        <div class="performance-stats" style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div class="stat-item" style="text-align: center; padding: var(--space-md); background: rgba(0,53,128,0.05); border-radius: var(--radius-md);">
+            <span class="stat-value trend-up" style="font-size: 18px; font-weight: bold; display: block;">${territory_growth}</span>
+            <span class="stat-label" style="font-size: 12px; color: var(--text-secondary);">Territory Growth</span>
           </div>
-          <div class="stat-item">
-            <span class="stat-value trend-up">${vs_peer_avg}</span>
-            <span class="stat-label">vs Peers</span>
+          <div class="stat-item" style="text-align: center; padding: var(--space-md); background: rgba(0,53,128,0.05); border-radius: var(--radius-md);">
+            <span class="stat-value trend-up" style="font-size: 18px; font-weight: bold; display: block;">${vs_peer_avg}</span>
+            <span class="stat-label" style="font-size: 12px; color: var(--text-secondary);">vs Peers</span>
           </div>
         </div>
       </div>

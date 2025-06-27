@@ -337,14 +337,14 @@
         
         .charts-content {
             flex: 1;
-            padding: var(--space-sm);
+            padding: var(--space-md);
             overflow: hidden;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: 1fr 1fr auto;
-            gap: var(--space-sm);
-            height: calc(100vh - 180px);
-            max-height: calc(100vh - 180px);
+            gap: var(--space-lg);
+            height: calc(100vh - 160px);
+            max-height: calc(100vh - 160px);
         }
         
         .empty-state {
@@ -384,15 +384,14 @@
         .chart-container {
             background: white;
             border: 1px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
             display: flex;
             flex-direction: column;
-            box-shadow: var(--shadow-sm);
+            box-shadow: var(--shadow-md);
             transition: all 0.2s ease;
             height: 100%;
-            min-height: 280px;
-            max-height: 320px;
+            min-height: 340px;
             overflow: hidden;
         }
         
@@ -433,7 +432,7 @@
             color: var(--text-primary);
             display: flex;
             flex-direction: column;
-            min-height: 180px;
+            min-height: 240px;
         }
         
         /* Enhanced Chart Styles */
@@ -621,12 +620,12 @@
         }
         
         .line-chart {
-            height: 120px;
+            height: 180px;
             position: relative;
             background: linear-gradient(to bottom, rgba(0, 53, 128, 0.02) 0%, rgba(255,255,255,0.9) 100%);
             border: 1px solid rgba(0, 53, 128, 0.1);
             border-radius: var(--radius-md);
-            padding: var(--space-md);
+            padding: var(--space-lg);
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
             flex: 1;
         }
@@ -675,11 +674,11 @@
         }
         
         .revenue-bars {
-            height: 120px;
+            height: 180px;
             display: flex;
             align-items: end;
-            gap: var(--space-sm);
-            padding: var(--space-md);
+            gap: var(--space-md);
+            padding: var(--space-lg);
             position: relative;
             background: linear-gradient(to top, rgba(0, 53, 128, 0.02) 0%, transparent 100%);
             border-radius: var(--radius-md);
