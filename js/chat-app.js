@@ -123,10 +123,9 @@ class ExpediaChat {
       if (data.chartData && data.chartData.length > 0) {
         this.updateChartsFromData(data.chartData);
       } else {
-        // Generate contextual chart updates based on message content
-        const contextualCharts = this.extractChartDataFromMessage(data.message);
-        if (contextualCharts.length > 0) {
-          this.updateChartsFromData(contextualCharts);
+        // Update simple charts based on query content
+        if (window.SimpleCharts) {
+          window.SimpleCharts.updateFromQuery(message);
         }
       }
       
@@ -176,10 +175,9 @@ class ExpediaChat {
       if (data.chartData && data.chartData.length > 0) {
         this.updateChartsFromData(data.chartData);
       } else {
-        // Generate contextual chart updates for quick queries
-        const contextualCharts = this.extractChartDataFromMessage(data.message);
-        if (contextualCharts.length > 0) {
-          this.updateChartsFromData(contextualCharts);
+        // Update simple charts based on quick query
+        if (window.SimpleCharts) {
+          window.SimpleCharts.updateFromQuery(query);
         }
       }
       

@@ -1,7 +1,24 @@
 // Simple, reliable chart system - no complex SVG or data processing
 class SimpleCharts {
   constructor() {
+    // Initialize with default data
+    this.data = {
+      revenue: '$4.2M',
+      growth: '+18.7%', 
+      rank: '#3/15',
+      pipeline: '87%',
+      chartBars: [45, 55, 50, 65, 70, 80], // Heights for Jul-Dec
+      opportunities: [
+        { hotel: 'Fontainebleau Miami', location: 'South Beach', value: '$490K', confidence: '92%', priority: 'Critical' },
+        { hotel: 'Marriott Biscayne Bay', location: 'Downtown', value: '$480K', confidence: '87%', priority: 'High' }
+      ],
+      pipelineTotal: '$1.5M',
+      quickWins: '3',
+      avgTimeline: '52d'
+    };
+    
     this.initializeCharts();
+    this.setupChatIntegration();
   }
 
   initializeCharts() {
@@ -9,6 +26,80 @@ class SimpleCharts {
     this.renderRevenueChart();
     this.renderMarketChart();
     this.renderCoachChart();
+  }
+
+  generateChartBars() {
+    const months = ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return this.data.chartBars.map((height, i) => {
+      const isHighlight = i === months.length - 1;
+      const color = isHighlight ? 'linear-gradient(to top, #28a745, #34ce57)' : 'linear-gradient(to top, #003580, #0066cc)';
+      const shadow = isHighlight ? 'box-shadow: 0 2px 8px rgba(40,167,69,0.3);' : '';
+      const textColor = isHighlight ? '#28a745' : '#666';
+      const fontWeight = isHighlight ? '600' : '500';
+      
+      return `
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <div style="width: 30px; height: ${height}px; background: ${color}; border-radius: 3px; margin-bottom: 4px; ${shadow}"></div>
+          <span style="font-size: 10px; font-weight: ${fontWeight}; color: ${textColor};">${months[i]}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  setupChatIntegration() {
+    // Listen for chat messages to update charts
+    document.addEventListener('chartUpdate', (event) => {
+      const { type, data } = event.detail;
+      this.updateChart(type, data);
+    });
+  }
+
+  updateChart(type, newData) {
+    // Update data and re-render specific chart
+    Object.assign(this.data, newData);
+    
+    switch (type) {
+      case 'territory':
+        this.renderTerritoryChart();
+        break;
+      case 'revenue':
+        this.renderRevenueChart();
+        break;
+      case 'market':
+        this.renderMarketChart();
+        break;
+      case 'coach':
+        this.renderCoachChart();
+        break;
+    }
+  }
+
+  // Method to trigger updates from chat queries
+  static updateFromQuery(query) {
+    const charts = window.simpleCharts;
+    if (!charts) return;
+
+    const queryLower = query.toLowerCase();
+    
+    // Territory performance updates
+    if (queryLower.includes('revenue') || queryLower.includes('performance')) {
+      const newRevenue = Math.random() > 0.5 ? '$4.8M' : '$3.9M';
+      const newGrowth = Math.random() > 0.5 ? '+22.1%' : '+15.3%';
+      charts.updateChart('territory', { revenue: newRevenue, growth: newGrowth });
+    }
+    
+    // Revenue opportunities updates
+    if (queryLower.includes('opportunity') || queryLower.includes('pipeline')) {
+      const newPipeline = Math.random() > 0.5 ? '$1.8M' : '$1.2M';
+      const newQuickWins = Math.floor(Math.random() * 3) + 2;
+      charts.updateChart('revenue', { pipelineTotal: newPipeline, quickWins: newQuickWins.toString() });
+    }
+    
+    // Market intelligence updates
+    if (queryLower.includes('market') || queryLower.includes('competition')) {
+      // Market data can be updated here
+      console.log('Market data updated based on query');
+    }
   }
 
   renderTerritoryChart() {
@@ -19,67 +110,44 @@ class SimpleCharts {
     if (!chartContent) return;
 
     chartContent.innerHTML = `
-      <div style="height: 240px; padding: 20px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
         <!-- Header Metrics -->
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding: 16px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #003580; margin-bottom: 4px;">$4.2M</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Current Revenue</div>
+            <div class="metric-value" style="font-size: 20px; font-weight: 700; color: #003580; margin-bottom: 2px;">$${this.data.revenue || '4.2M'}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Current Revenue</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #28a745; margin-bottom: 4px;">+18.7%</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">YTD Growth</div>
+            <div class="metric-value" style="font-size: 20px; font-weight: 700; color: #28a745; margin-bottom: 2px;">${this.data.growth || '+18.7%'}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">YTD Growth</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #003580; margin-bottom: 4px;">#3/15</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Territory Rank</div>
+            <div class="metric-value" style="font-size: 20px; font-weight: 700; color: #003580; margin-bottom: 2px;">${this.data.rank || '#3/15'}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Territory Rank</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #28a745; margin-bottom: 4px;">87%</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Pipeline Health</div>
+            <div class="metric-value" style="font-size: 20px; font-weight: 700; color: #28a745; margin-bottom: 2px;">${this.data.pipeline || '87%'}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Pipeline Health</div>
           </div>
         </div>
         
         <!-- Simple Chart Representation -->
-        <div style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,53,128,0.08); height: 140px;">
-          <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px;">Performance Trends</div>
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,53,128,0.08); height: 120px;">
+          <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;">Performance Trends</div>
           
           <!-- Chart Bars -->
-          <div style="display: flex; align-items: end; justify-content: space-between; height: 80px; padding: 0 20px;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 45px; background: linear-gradient(to top, #003580, #0066cc); border-radius: 4px; margin-bottom: 8px;"></div>
-              <span style="font-size: 12px; font-weight: 500; color: #666;">Jul</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 55px; background: linear-gradient(to top, #003580, #0066cc); border-radius: 4px; margin-bottom: 8px;"></div>
-              <span style="font-size: 12px; font-weight: 500; color: #666;">Aug</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 50px; background: linear-gradient(to top, #003580, #0066cc); border-radius: 4px; margin-bottom: 8px;"></div>
-              <span style="font-size: 12px; font-weight: 500; color: #666;">Sep</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 65px; background: linear-gradient(to top, #003580, #0066cc); border-radius: 4px; margin-bottom: 8px;"></div>
-              <span style="font-size: 12px; font-weight: 500; color: #666;">Oct</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 70px; background: linear-gradient(to top, #003580, #0066cc); border-radius: 4px; margin-bottom: 8px;"></div>
-              <span style="font-size: 12px; font-weight: 500; color: #666;">Nov</span>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <div style="width: 40px; height: 80px; background: linear-gradient(to top, #28a745, #34ce57); border-radius: 4px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(40,167,69,0.3);"></div>
-              <span style="font-size: 12px; font-weight: 600; color: #28a745;">Dec</span>
-            </div>
+          <div style="display: flex; align-items: end; justify-content: space-between; height: 60px; padding: 0 10px;">
+            ${this.generateChartBars()}
           </div>
           
           <!-- Legend -->
-          <div style="display: flex; justify-content: center; gap: 30px; margin-top: 12px; font-size: 14px;">
-            <span style="display: flex; align-items: center; gap: 8px;">
-              <div style="width: 16px; height: 3px; background: #003580; border-radius: 2px;"></div>
-              Revenue: $4.2M
+          <div style="display: flex; justify-content: center; gap: 20px; margin-top: 8px; font-size: 12px;">
+            <span style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 12px; height: 2px; background: #003580; border-radius: 1px;"></div>
+              Revenue: ${this.data.revenue}
             </span>
-            <span style="display: flex; align-items: center; gap: 8px;">
-              <div style="width: 16px; height: 3px; background: #28a745; border-radius: 2px;"></div>
+            <span style="display: flex; align-items: center; gap: 6px;">
+              <div style="width: 12px; height: 2px; background: #28a745; border-radius: 1px;"></div>
               vs Competition: +28%
             </span>
           </div>
@@ -96,49 +164,44 @@ class SimpleCharts {
     if (!chartContent) return;
 
     chartContent.innerHTML = `
-      <div style="height: 240px; padding: 20px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);">
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);">
         <!-- Summary Stats -->
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding: 16px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(253,126,20,0.08);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(253,126,20,0.08);">
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #28a745; margin-bottom: 4px;">$1.5M</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Total Pipeline</div>
+            <div style="font-size: 20px; font-weight: 700; color: #28a745; margin-bottom: 2px;">${this.data.pipelineTotal}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Total Pipeline</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #fd7e14; margin-bottom: 4px;">3</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Quick Wins</div>
+            <div style="font-size: 20px; font-weight: 700; color: #fd7e14; margin-bottom: 2px;">${this.data.quickWins}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Quick Wins</div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 24px; font-weight: 700; color: #003580; margin-bottom: 4px;">52d</div>
-            <div style="font-size: 14px; color: #666; font-weight: 500;">Avg Timeline</div>
+            <div style="font-size: 20px; font-weight: 700; color: #003580; margin-bottom: 2px;">${this.data.avgTimeline}</div>
+            <div style="font-size: 12px; color: #666; font-weight: 500;">Avg Timeline</div>
           </div>
         </div>
         
         <!-- Opportunities List -->
-        <div style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(253,126,20,0.08); height: 140px;">
-          <div style="font-size: 16px; font-weight: 600; color: #333; margin-bottom: 16px;">Top Revenue Opportunities</div>
+        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(253,126,20,0.08); height: 120px;">
+          <div style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px;">Top Revenue Opportunities</div>
           
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #dc3545;">
-              <div>
-                <div style="font-weight: 600; color: #333; font-size: 14px;">Fontainebleau Miami</div>
-                <div style="color: #666; font-size: 12px;">South Beach • Critical Priority</div>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-weight: 700; color: #dc3545; font-size: 16px;">$490K</div>
-                <div style="color: #666; font-size: 12px;">92% confidence</div>
-              </div>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #fd7e14;">
-              <div>
-                <div style="font-weight: 600; color: #333; font-size: 14px;">Marriott Biscayne Bay</div>
-                <div style="color: #666; font-size: 12px;">Downtown • High Priority</div>
-              </div>
-              <div style="text-align: right;">
-                <div style="font-weight: 700; color: #fd7e14; font-size: 16px;">$480K</div>
-                <div style="color: #666; font-size: 12px;">87% confidence</div>
-              </div>
-            </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            ${this.data.opportunities.map((opp, i) => {
+              const borderColor = opp.priority === 'Critical' ? '#dc3545' : '#fd7e14';
+              const valueColor = opp.priority === 'Critical' ? '#dc3545' : '#fd7e14';
+              return `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid ${borderColor};">
+                  <div>
+                    <div style="font-weight: 600; color: #333; font-size: 12px;">${opp.hotel}</div>
+                    <div style="color: #666; font-size: 10px;">${opp.location} • ${opp.priority} Priority</div>
+                  </div>
+                  <div style="text-align: right;">
+                    <div style="font-weight: 700; color: ${valueColor}; font-size: 14px;">${opp.value}</div>
+                    <div style="color: #666; font-size: 10px;">${opp.confidence} confidence</div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
           </div>
         </div>
       </div>
@@ -153,29 +216,29 @@ class SimpleCharts {
     if (!chartContent) return;
 
     chartContent.innerHTML = `
-      <div style="height: 240px; padding: 20px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
         <!-- Market Overview -->
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; padding: 16px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(102,51,153,0.08);">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 12px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(102,51,153,0.08);">
           <div style="text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #003580; margin-bottom: 4px;">$298</div>
-            <div style="font-size: 13px; color: #666; font-weight: 500;">Market ADR <span style="color: #28a745; font-weight: 600;">+5.2%</span></div>
+            <div style="font-size: 18px; font-weight: 700; color: #003580; margin-bottom: 2px;">$298</div>
+            <div style="font-size: 11px; color: #666; font-weight: 500;">Market ADR <span style="color: #28a745; font-weight: 600;">+5.2%</span></div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #003580; margin-bottom: 4px;">84.3%</div>
-            <div style="font-size: 13px; color: #666; font-weight: 500;">Market Occ <span style="color: #28a745; font-weight: 600;">+2.1%</span></div>
+            <div style="font-size: 18px; font-weight: 700; color: #003580; margin-bottom: 2px;">84.3%</div>
+            <div style="font-size: 11px; color: #666; font-weight: 500;">Market Occ <span style="color: #28a745; font-weight: 600;">+2.1%</span></div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #003580; margin-bottom: 4px;">$251</div>
-            <div style="font-size: 13px; color: #666; font-weight: 500;">Market RevPAR <span style="color: #28a745; font-weight: 600;">+7.8%</span></div>
+            <div style="font-size: 18px; font-weight: 700; color: #003580; margin-bottom: 2px;">$251</div>
+            <div style="font-size: 11px; color: #666; font-weight: 500;">Market RevPAR <span style="color: #28a745; font-weight: 600;">+7.8%</span></div>
           </div>
           <div style="text-align: center;">
-            <div style="font-size: 22px; font-weight: 700; color: #fd7e14; margin-bottom: 4px;">127</div>
-            <div style="font-size: 13px; color: #666; font-weight: 500;">Pace Index <span style="color: #28a745; font-weight: 600;">+15.3%</span></div>
+            <div style="font-size: 18px; font-weight: 700; color: #fd7e14; margin-bottom: 2px;">127</div>
+            <div style="font-size: 11px; color: #666; font-weight: 500;">Pace Index <span style="color: #28a745; font-weight: 600;">+15.3%</span></div>
           </div>
         </div>
         
         <!-- Competitive & Demand Grid -->
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; height: 120px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; height: 100px;">
           <!-- Competitor Performance -->
           <div style="padding: 16px; border: 1px solid rgba(102,51,153,0.1); border-radius: 12px; background: white; box-shadow: 0 2px 4px rgba(102,51,153,0.05);">
             <h4 style="margin: 0 0 12px 0; font-size: 14px; font-weight: 600; color: #333;">Competitive Position</h4>
@@ -224,7 +287,7 @@ class SimpleCharts {
     if (!chartContent) return;
 
     chartContent.innerHTML = `
-      <div style="height: 240px; padding: 20px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
         <!-- Performance Overview -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
           <!-- Manager Score -->
