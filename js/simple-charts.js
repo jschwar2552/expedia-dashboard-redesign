@@ -74,31 +74,112 @@ class SimpleCharts {
     }
   }
 
-  // Method to trigger updates from chat queries
+  // Method to trigger updates from chat queries with compelling storylines
   static updateFromQuery(query) {
     const charts = window.simpleCharts;
     if (!charts) return;
 
     const queryLower = query.toLowerCase();
     
-    // Territory performance updates
-    if (queryLower.includes('revenue') || queryLower.includes('performance')) {
-      const newRevenue = Math.random() > 0.5 ? '$4.8M' : '$3.9M';
-      const newGrowth = Math.random() > 0.5 ? '+22.1%' : '+15.3%';
-      charts.updateChart('territory', { revenue: newRevenue, growth: newGrowth });
+    // Storyline 1: "Which hotels need attention this week?" - Crisis Management
+    if (queryLower.includes('hotels') && queryLower.includes('attention')) {
+      charts.updateChart('territory', { 
+        revenue: '$3.1M', 
+        growth: '+8.2%', 
+        rank: '#7/15', 
+        pipeline: '64%',
+        chartBars: [45, 55, 50, 42, 38, 35] // Declining trend
+      });
+      charts.updateChart('revenue', { 
+        pipelineTotal: '$2.1M',
+        quickWins: '5',
+        avgTimeline: '14d',
+        opportunities: [
+          { hotel: 'Four Seasons Miami', location: 'Brickell', value: '$680K', confidence: '95%', priority: 'Critical' },
+          { hotel: 'W South Beach', location: 'South Beach', value: '$520K', confidence: '89%', priority: 'Critical' },
+          { hotel: 'Edition Miami Beach', location: 'Mid-Beach', value: '$340K', confidence: '91%', priority: 'High' }
+        ]
+      });
     }
     
-    // Revenue opportunities updates
-    if (queryLower.includes('opportunity') || queryLower.includes('pipeline')) {
-      const newPipeline = Math.random() > 0.5 ? '$1.8M' : '$1.2M';
-      const newQuickWins = Math.floor(Math.random() * 3) + 2;
-      charts.updateChart('revenue', { pipelineTotal: newPipeline, quickWins: newQuickWins.toString() });
+    // Storyline 2: "Show me South Beach performance trends" - Seasonal Success
+    else if (queryLower.includes('south beach') && queryLower.includes('trends')) {
+      charts.updateChart('territory', { 
+        revenue: '$5.8M', 
+        growth: '+31.4%', 
+        rank: '#1/15', 
+        pipeline: '94%',
+        chartBars: [65, 72, 68, 85, 92, 98] // Strong upward trend
+      });
+      charts.updateChart('revenue', { 
+        pipelineTotal: '$1.9M',
+        quickWins: '2',
+        avgTimeline: '21d',
+        opportunities: [
+          { hotel: 'Fontainebleau Miami', location: 'South Beach', value: '$890K', confidence: '97%', priority: 'High' },
+          { hotel: 'SLS South Beach', location: 'South Beach', value: '$650K', confidence: '93%', priority: 'Medium' },
+          { hotel: 'The Setai Miami Beach', location: 'South Beach', value: '$380K', confidence: '88%', priority: 'Medium' }
+        ]
+      });
     }
     
-    // Market intelligence updates
-    if (queryLower.includes('market') || queryLower.includes('competition')) {
-      // Market data can be updated here
-      console.log('Market data updated based on query');
+    // Storyline 3: "Revenue optimization opportunities" - Growth Focus
+    else if (queryLower.includes('revenue') && queryLower.includes('optimization')) {
+      charts.updateChart('territory', { 
+        revenue: '$4.6M', 
+        growth: '+24.1%', 
+        rank: '#2/15', 
+        pipeline: '91%',
+        chartBars: [45, 52, 61, 68, 78, 85] // Steady growth
+      });
+      charts.updateChart('revenue', { 
+        pipelineTotal: '$3.2M',
+        quickWins: '7',
+        avgTimeline: '28d',
+        opportunities: [
+          { hotel: 'Marriott Marquis Miami', location: 'Downtown', value: '$1.2M', confidence: '92%', priority: 'Critical' },
+          { hotel: 'InterContinental Miami', location: 'Downtown', value: '$890K', confidence: '88%', priority: 'High' },
+          { hotel: 'Conrad Miami', location: 'Brickell', value: '$760K', confidence: '85%', priority: 'High' }
+        ]
+      });
+    }
+    
+    // Storyline 4: "Competitive analysis vs. Marriott" - Market Position
+    else if (queryLower.includes('competitive') || queryLower.includes('marriott')) {
+      charts.updateChart('territory', { 
+        revenue: '$4.1M', 
+        growth: '+19.3%', 
+        rank: '#4/15', 
+        pipeline: '83%',
+        chartBars: [45, 55, 50, 58, 62, 66] // Moderate growth
+      });
+      charts.updateChart('revenue', { 
+        pipelineTotal: '$1.4M',
+        quickWins: '4',
+        avgTimeline: '45d',
+        opportunities: [
+          { hotel: 'JW Marriott Miami', location: 'Brickell', value: '$580K', confidence: '84%', priority: 'High' },
+          { hotel: 'W Miami', location: 'Brickell', value: '$420K', confidence: '79%', priority: 'Medium' },
+          { hotel: 'AC Hotel Miami Beach', location: 'South Beach', value: '$290K', confidence: '86%', priority: 'Medium' }
+        ]
+      });
+    }
+    
+    // Default updates for other queries
+    else {
+      // Territory performance updates
+      if (queryLower.includes('revenue') || queryLower.includes('performance')) {
+        const newRevenue = Math.random() > 0.5 ? '$4.8M' : '$3.9M';
+        const newGrowth = Math.random() > 0.5 ? '+22.1%' : '+15.3%';
+        charts.updateChart('territory', { revenue: newRevenue, growth: newGrowth });
+      }
+      
+      // Revenue opportunities updates
+      if (queryLower.includes('opportunity') || queryLower.includes('pipeline')) {
+        const newPipeline = Math.random() > 0.5 ? '$1.8M' : '$1.2M';
+        const newQuickWins = Math.floor(Math.random() * 3) + 2;
+        charts.updateChart('revenue', { pipelineTotal: newPipeline, quickWins: newQuickWins.toString() });
+      }
     }
   }
 

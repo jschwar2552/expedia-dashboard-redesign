@@ -140,12 +140,12 @@ class ExpediaChat {
     try {
       this.showTypingIndicator();
 
-      // Temporarily use the chat endpoint until quick-query deploys
+      // Rich storyline queries that trigger compelling chart updates
       const quickQueries = {
-        'hotels-attention': 'Which hotels in my Southeast Florida territory need immediate attention this week based on performance metrics?',
-        'south-beach-trends': 'Show me South Beach performance trends and market opportunities for the next 30 days',
-        'revenue-optimization': 'What are the top revenue optimization opportunities across my hotel portfolio right now?',
-        'competitive-analysis': 'Provide competitive analysis comparing my territory performance vs. Marriott and Hilton properties'
+        'hotels-attention': 'Which hotels need attention this week?',
+        'south-beach-trends': 'Show me South Beach performance trends',
+        'revenue-optimization': 'Revenue optimization opportunities',
+        'competitive-analysis': 'Competitive analysis vs. Marriott'
       };
 
       const query = quickQueries[queryType] || 'Please provide market analysis for Southeast Florida territory.';
