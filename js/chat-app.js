@@ -246,35 +246,21 @@ class ExpediaChat {
     // Store chart data
     this.charts[chartType] = data;
     
-    // Add loading state
-    const chartContent = container.querySelector('.chart-content');
-    if (chartContent) {
-      chartContent.style.opacity = '0.5';
-      chartContent.style.transition = 'opacity 0.3s ease';
+    // Update based on chart type immediately - no opacity effects
+    switch (chartType) {
+      case 'territory-performance':
+        this.renderLineChart(container, data);
+        break;
+      case 'revenue-opportunities':
+        this.renderBarChart(container, data);
+        break;
+      case 'market-intelligence':
+        this.renderMarketData(container, data);
+        break;
+      case 'performance-coach':
+        this.renderCoachingMetrics(container, data);
+        break;
     }
-    
-    // Update based on chart type with slight delay for smooth transition
-    setTimeout(() => {
-      switch (chartType) {
-        case 'territory-performance':
-          this.renderLineChart(container, data);
-          break;
-        case 'revenue-opportunities':
-          this.renderBarChart(container, data);
-          break;
-        case 'market-intelligence':
-          this.renderMarketData(container, data);
-          break;
-        case 'performance-coach':
-          this.renderCoachingMetrics(container, data);
-          break;
-      }
-      
-      // Restore opacity
-      if (chartContent) {
-        chartContent.style.opacity = '1';
-      }
-    }, 150);
   }
 
   renderLineChart(container, data) {
@@ -312,72 +298,75 @@ class ExpediaChat {
     const forecastPoints = this.generateLinePath([forecastStart, ...forecasted_next], maxRevenue, 200, 120, '#28a745', true, 2);
     
     chartContent.innerHTML = `
-      <div class="territory-dashboard" style="height: 240px; padding: var(--space-md);">
+      <div class="territory-dashboard" style="height: 240px; padding: var(--space-lg); background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);">
         <!-- Header Metrics -->
-        <div class="metrics-header" style="display: flex; justify-content: space-between; margin-bottom: var(--space-md); padding: var(--space-sm); background: linear-gradient(135deg, rgba(0,53,128,0.05) 0%, rgba(0,53,128,0.02) 100%); border-radius: var(--radius-md);">
-          <div class="metric-card">
-            <div class="metric-value" style="font-size: 18px; font-weight: bold; color: var(--expedia-blue);">$${(revenue[revenue.length-1]/1000000).toFixed(1)}M</div>
-            <div class="metric-label" style="font-size: 11px; color: var(--text-secondary);">Current Revenue</div>
+        <div class="metrics-header" style="display: flex; justify-content: space-between; margin-bottom: var(--space-lg); padding: var(--space-md); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,53,128,0.08); border: 1px solid rgba(0,53,128,0.05);">
+          <div class="metric-card" style="text-align: center;">
+            <div class="metric-value" style="font-size: 24px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">$${(revenue[revenue.length-1]/1000000).toFixed(1)}M</div>
+            <div class="metric-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Current Revenue</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-value" style="font-size: 18px; font-weight: bold; color: var(--success-green);">+${ytd_growth}%</div>
-            <div class="metric-label" style="font-size: 11px; color: var(--text-secondary);">YTD Growth</div>
+          <div class="metric-card" style="text-align: center;">
+            <div class="metric-value" style="font-size: 24px; font-weight: 700; color: var(--success-green); margin-bottom: 4px;">+${ytd_growth.toFixed(1)}%</div>
+            <div class="metric-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">YTD Growth</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-value" style="font-size: 18px; font-weight: bold; color: var(--expedia-blue);">#${territory_rank}/15</div>
-            <div class="metric-label" style="font-size: 11px; color: var(--text-secondary);">Territory Rank</div>
+          <div class="metric-card" style="text-align: center;">
+            <div class="metric-value" style="font-size: 24px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">#${territory_rank}/15</div>
+            <div class="metric-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Territory Rank</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-value" style="font-size: 18px; font-weight: bold; color: ${pipeline_health > 85 ? 'var(--success-green)' : 'var(--warning-orange)'}">${pipeline_health}%</div>
-            <div class="metric-label" style="font-size: 11px; color: var(--text-secondary);">Pipeline Health</div>
+          <div class="metric-card" style="text-align: center;">
+            <div class="metric-value" style="font-size: 24px; font-weight: 700; color: ${pipeline_health > 85 ? 'var(--success-green)' : 'var(--warning-orange)'}; margin-bottom: 4px;">${pipeline_health.toFixed(0)}%</div>
+            <div class="metric-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Pipeline Health</div>
           </div>
         </div>
         
         <!-- Multi-metric Chart -->
-        <div class="chart-container" style="height: 140px; position: relative;">
-          <svg class="territory-chart" viewBox="0 0 500 140" style="width: 100%; height: 100%; border: 1px solid rgba(0,53,128,0.1); border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,249,250,0.8) 100%);">
-            <!-- Grid lines -->
+        <div class="chart-container" style="height: 120px; position: relative; background: white; border-radius: 12px; padding: var(--space-md); box-shadow: 0 2px 8px rgba(0,53,128,0.08); border: 1px solid rgba(0,53,128,0.05);">
+          <div class="chart-title" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-sm);">Performance Trends</div>
+          <svg class="territory-chart" viewBox="0 0 600 80" style="width: 100%; height: 80px;">
+            <!-- Clean grid -->
             <defs>
-              <pattern id="grid" width="50" height="20" patternUnits="userSpaceOnUse">
-                <path d="M 50 0 L 0 0 0 20" fill="none" stroke="rgba(0,53,128,0.1)" stroke-width="0.5"/>
-              </pattern>
+              <linearGradient id="revenueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#003580;stop-opacity:0.3"/>
+                <stop offset="100%" style="stop-color:#003580;stop-opacity:0.05"/>
+              </linearGradient>
             </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" opacity="0.3"/>
             
-            <!-- Chart lines -->
-            <g transform="translate(50, 10)">
-              ${revenuePoints}
-              ${occupancyPoints}
-              ${revparPoints}
-              <g transform="translate(334, 0)">
-                ${forecastPoints}
-              </g>
+            <!-- Chart area background -->
+            <rect x="40" y="10" width="520" height="60" fill="rgba(248,249,250,0.5)" rx="4"/>
+            
+            <!-- Chart lines with improved styling -->
+            <g transform="translate(40, 10)">
+              ${this.generateSmoothPath(revenue, maxRevenue, 520, 60, '#003580', 3)}
+              ${this.generateSmoothPath(occupancy.map(x => x * (maxRevenue/100)), maxRevenue, 520, 60, '#0066cc', 2, true)}
+              ${this.generateSmoothPath(revpar.map(x => x * (maxRevenue/350)), maxRevenue, 520, 60, '#ff6b35', 2)}
             </g>
             
-            <!-- Data points -->
+            <!-- Enhanced data points -->
             ${revenue.map((val, i) => {
-              const x = 50 + (i / (revenue.length - 1)) * 400;
-              const y = 130 - (val / maxRevenue) * 120;
-              return `<circle cx="${x}" cy="${y}" r="3" fill="var(--expedia-blue)" stroke="white" stroke-width="2"/>`;
+              const x = 40 + (i / (revenue.length - 1)) * 520;
+              const y = 70 - (val / maxRevenue) * 60;
+              return `
+                <circle cx="${x}" cy="${y}" r="4" fill="var(--expedia-blue)" stroke="white" stroke-width="2" style="filter: drop-shadow(0 2px 4px rgba(0,53,128,0.2));"/>
+                <text x="${x}" y="${y - 8}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--expedia-blue)">$${(val/1000000).toFixed(1)}M</text>
+              `;
             }).join('')}
             
-            <!-- Month labels -->
+            <!-- Month labels with better styling -->
             ${timeframes.map((month, i) => {
-              const x = 50 + (i / (timeframes.length - 1)) * 400;
-              return `<text x="${x}" y="135" text-anchor="middle" font-size="10" fill="var(--text-secondary)">${month}</text>`;
+              const x = 40 + (i / (timeframes.length - 1)) * 520;
+              return `<text x="${x}" y="85" text-anchor="middle" font-size="14" font-weight="500" fill="var(--text-secondary)">${month}</text>`;
             }).join('')}
           </svg>
         </div>
         
         <!-- Advanced Legend -->
-        <div class="chart-legend" style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-sm); padding: var(--space-sm); font-size: 11px;">
-          <div class="legend-section" style="display: flex; gap: var(--space-lg);">
-            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-xs);"><div style="width: 12px; height: 2px; background: #003580;"></div> Revenue: $${(revenue[revenue.length-1]/1000000).toFixed(1)}M</span>
-            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-xs);"><div style="width: 12px; height: 2px; background: #0066cc; border-top: 1px dashed #0066cc;"></div> Occupancy: ${occupancy[occupancy.length-1]}%</span>
-            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-xs);"><div style="width: 12px; height: 2px; background: #ff6b35;"></div> RevPAR: $${revpar[revpar.length-1]}</span>
-            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-xs); color: var(--success-green);"><div style="width: 12px; height: 2px; background: #28a745; border-top: 1px dashed #28a745;"></div> Forecast</span>
+        <div class="chart-legend" style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-md); padding: var(--space-md); background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,53,128,0.05);">
+          <div class="legend-section" style="display: flex; gap: var(--space-xl);">
+            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-sm); font-size: 14px; font-weight: 500;"><div style="width: 16px; height: 3px; background: #003580; border-radius: 2px;"></div> Revenue: $${(revenue[revenue.length-1]/1000000).toFixed(1)}M</span>
+            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-sm); font-size: 14px; font-weight: 500;"><div style="width: 16px; height: 3px; background: #0066cc; border-radius: 2px; border-top: 1px dashed #0066cc;"></div> Occupancy: ${occupancy[occupancy.length-1]}%</span>
+            <span class="legend-item" style="display: flex; align-items: center; gap: var(--space-sm); font-size: 14px; font-weight: 500;"><div style="width: 16px; height: 3px; background: #ff6b35; border-radius: 2px;"></div> RevPAR: $${revpar[revpar.length-1]}</span>
           </div>
-          <div class="performance-indicator" style="display: flex; align-items: center; gap: var(--space-xs); font-weight: bold; color: ${competitor_gap[competitor_gap.length-1] > 0 ? 'var(--success-green)' : 'var(--error-red)'};">vs Competition: ${competitor_gap[competitor_gap.length-1] > 0 ? '+' : ''}${competitor_gap[competitor_gap.length-1]}%</div>
+          <div class="performance-indicator" style="display: flex; align-items: center; gap: var(--space-sm); font-weight: 600; font-size: 16px; color: ${competitor_gap[competitor_gap.length-1] > 0 ? 'var(--success-green)' : 'var(--error-red)'}; padding: var(--space-sm) var(--space-md); background: ${competitor_gap[competitor_gap.length-1] > 0 ? 'rgba(40,167,69,0.1)' : 'rgba(220,53,69,0.1)'}; border-radius: 6px;">vs Competition: ${competitor_gap[competitor_gap.length-1] > 0 ? '+' : ''}${competitor_gap[competitor_gap.length-1]}%</div>
         </div>
       </div>
     `;
@@ -456,61 +445,68 @@ class ExpediaChat {
     };
     
     chartContent.innerHTML = `
-      <div class="revenue-opportunities" style="height: 240px; padding: var(--space-md);">
+      <div class="revenue-opportunities" style="height: 240px; padding: var(--space-lg); background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);">
         <!-- Summary Stats -->
-        <div class="opportunity-summary" style="display: flex; justify-content: space-between; margin-bottom: var(--space-md); padding: var(--space-sm); background: linear-gradient(135deg, rgba(253,126,20,0.05) 0%, rgba(253,126,20,0.02) 100%); border-radius: var(--radius-md);">
-          <div class="summary-stat">
-            <div class="stat-value" style="font-size: 18px; font-weight: bold; color: var(--success-green);">$${(total_pipeline/1000000).toFixed(1)}M</div>
-            <div class="stat-label" style="font-size: 11px; color: var(--text-secondary);">Total Pipeline</div>
+        <div class="opportunity-summary" style="display: flex; justify-content: space-between; margin-bottom: var(--space-lg); padding: var(--space-md); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(253,126,20,0.08); border: 1px solid rgba(253,126,20,0.05);">
+          <div class="summary-stat" style="text-align: center;">
+            <div class="stat-value" style="font-size: 24px; font-weight: 700; color: var(--success-green); margin-bottom: 4px;">$${(total_pipeline/1000000).toFixed(1)}M</div>
+            <div class="stat-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Total Pipeline</div>
           </div>
-          <div class="summary-stat">
-            <div class="stat-value" style="font-size: 18px; font-weight: bold; color: var(--warning-orange);">${quick_wins}</div>
-            <div class="stat-label" style="font-size: 11px; color: var(--text-secondary);">Quick Wins</div>
+          <div class="summary-stat" style="text-align: center;">
+            <div class="stat-value" style="font-size: 24px; font-weight: 700; color: var(--warning-orange); margin-bottom: 4px;">${quick_wins}</div>
+            <div class="stat-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Quick Wins</div>
           </div>
-          <div class="summary-stat">
-            <div class="stat-value" style="font-size: 18px; font-weight: bold; color: var(--expedia-blue);">${avg_implementation_time}d</div>
-            <div class="stat-label" style="font-size: 11px; color: var(--text-secondary);">Avg Timeline</div>
+          <div class="summary-stat" style="text-align: center;">
+            <div class="stat-value" style="font-size: 24px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">${avg_implementation_time}d</div>
+            <div class="stat-label" style="font-size: 14px; color: var(--text-secondary); font-weight: 500;">Avg Timeline</div>
           </div>
         </div>
         
         <!-- Opportunities Chart -->
-        <div class="opportunities-chart" style="height: 120px; position: relative;">
-          <svg viewBox="0 0 500 120" style="width: 100%; height: 100%; border: 1px solid rgba(253,126,20,0.1); border-radius: var(--radius-md); background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(254,248,240,0.9) 100%);">
+        <div class="opportunities-chart" style="height: 120px; position: relative; background: white; border-radius: 12px; padding: var(--space-md); box-shadow: 0 2px 8px rgba(253,126,20,0.08); border: 1px solid rgba(253,126,20,0.05);">
+          <div class="chart-title" style="font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: var(--space-sm);">Revenue Opportunities</div>
+          <svg viewBox="0 0 600 80" style="width: 100%; height: 80px;">
             <!-- Chart bars with detailed info -->
             ${opportunities.map((opp, i) => {
-              const barHeight = (opp.opportunity_value / maxOpportunity) * 80;
-              const x = i * 110 + 40;
-              const y = 100 - barHeight;
+              const barHeight = (opp.opportunity_value / maxOpportunity) * 50;
+              const x = i * 140 + 60;
+              const y = 60 - barHeight;
               const color = priorityColors[opp.priority];
               
               return `
                 <g class="opportunity-bar" data-hotel="${opp.hotel}">
-                  <!-- Bar -->
-                  <rect x="${x}" y="${y}" width="70" height="${barHeight}" 
-                        fill="${color}" opacity="0.8" rx="6" 
-                        stroke="${color}" stroke-width="1"/>
+                  <!-- Bar with gradient -->
+                  <defs>
+                    <linearGradient id="barGradient${i}" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" style="stop-color:${color};stop-opacity:0.9"/>
+                      <stop offset="100%" style="stop-color:${color};stop-opacity:0.6"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="${x}" y="${y}" width="80" height="${barHeight}" 
+                        fill="url(#barGradient${i})" rx="8" 
+                        stroke="${color}" stroke-width="1" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));"/>
                   <!-- Value label -->
-                  <text x="${x + 35}" y="${y - 5}" text-anchor="middle" 
-                        font-size="10" font-weight="bold" fill="${color}">$${(opp.opportunity_value/1000).toFixed(0)}K</text>
+                  <text x="${x + 40}" y="${y - 8}" text-anchor="middle" 
+                        font-size="14" font-weight="700" fill="${color}">$${(opp.opportunity_value/1000).toFixed(0)}K</text>
                   <!-- Confidence indicator -->
-                  <circle cx="${x + 60}" cy="${y + 10}" r="8" 
-                          fill="white" stroke="${color}" stroke-width="2"/>
-                  <text x="${x + 60}" y="${y + 14}" text-anchor="middle" 
-                        font-size="8" font-weight="bold" fill="${color}">${opp.confidence}</text>
+                  <circle cx="${x + 65}" cy="${y + 12}" r="10" 
+                          fill="white" stroke="${color}" stroke-width="2" style="filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));"/>
+                  <text x="${x + 65}" y="${y + 16}" text-anchor="middle" 
+                        font-size="10" font-weight="bold" fill="${color}">${opp.confidence}</text>
                   <!-- Hotel name -->
-                  <text x="${x + 35}" y="115" text-anchor="middle" 
-                        font-size="9" fill="var(--text-secondary)">${opp.hotel.split(' ')[0]}</text>
+                  <text x="${x + 40}" y="75" text-anchor="middle" 
+                        font-size="12" font-weight="500" fill="var(--text-secondary)">${opp.hotel.split(' ')[0]}</text>
                 </g>
               `;
             }).join('')}
             
             <!-- Priority Legend -->
-            <g transform="translate(400, 20)">
-              <text x="0" y="0" font-size="10" font-weight="bold" fill="var(--text-primary)">Priority</text>
-              ${Object.entries(priorityColors).map(([priority, color], i) => `
-                <g transform="translate(0, ${15 + i * 12})">
-                  <circle cx="0" cy="0" r="4" fill="${color}"/>
-                  <text x="10" y="3" font-size="9" fill="var(--text-secondary)">${priority}</text>
+            <g transform="translate(480, 15)">
+              <text x="0" y="0" font-size="12" font-weight="600" fill="var(--text-primary)">Priority</text>
+              ${Object.entries(priorityColors).slice(0, 3).map(([priority, color], i) => `
+                <g transform="translate(0, ${18 + i * 15})">
+                  <circle cx="0" cy="0" r="5" fill="${color}" style="filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));"/>
+                  <text x="12" y="4" font-size="11" font-weight="500" fill="var(--text-secondary)">${priority}</text>
                 </g>
               `).join('')}
             </g>
@@ -518,11 +514,11 @@ class ExpediaChat {
         </div>
         
         <!-- Action Items Summary -->
-        <div class="action-summary" style="margin-top: var(--space-sm); display: flex; flex-wrap: wrap; gap: var(--space-xs); font-size: 10px;">
-          <div class="action-tag" style="background: rgba(220,53,69,0.1); color: #dc3545; padding: 2px 6px; border-radius: 10px; font-weight: 500;">Rate Optimization</div>
-          <div class="action-tag" style="background: rgba(253,126,20,0.1); color: #fd7e14; padding: 2px 6px; border-radius: 10px; font-weight: 500;">Group Sales</div>
-          <div class="action-tag" style="background: rgba(255,193,7,0.1); color: #ffc107; padding: 2px 6px; border-radius: 10px; font-weight: 500;">Corporate Strategy</div>
-          <div class="action-tag" style="background: rgba(40,167,69,0.1); color: #28a745; padding: 2px 6px; border-radius: 10px; font-weight: 500;">Digital Marketing</div>
+        <div class="action-summary" style="margin-top: var(--space-md); display: flex; flex-wrap: wrap; gap: var(--space-sm); font-size: 12px;">
+          <div class="action-tag" style="background: rgba(220,53,69,0.1); color: #dc3545; padding: var(--space-xs) var(--space-sm); border-radius: 16px; font-weight: 500; border: 1px solid rgba(220,53,69,0.2);">Rate Optimization</div>
+          <div class="action-tag" style="background: rgba(253,126,20,0.1); color: #fd7e14; padding: var(--space-xs) var(--space-sm); border-radius: 16px; font-weight: 500; border: 1px solid rgba(253,126,20,0.2);">Group Sales</div>
+          <div class="action-tag" style="background: rgba(255,193,7,0.1); color: #ffc107; padding: var(--space-xs) var(--space-sm); border-radius: 16px; font-weight: 500; border: 1px solid rgba(255,193,7,0.2);">Corporate Strategy</div>
+          <div class="action-tag" style="background: rgba(40,167,69,0.1); color: #28a745; padding: var(--space-xs) var(--space-sm); border-radius: 16px; font-weight: 500; border: 1px solid rgba(40,167,69,0.2);">Digital Marketing</div>
         </div>
       </div>
     `;
@@ -580,41 +576,41 @@ class ExpediaChat {
     const avgCompetitorADR = competitorData.reduce((sum, [_, data]) => sum + data.adr, 0) / competitorData.length;
     
     chartContent.innerHTML = `
-      <div class="market-intelligence" style="height: 240px; padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-sm);">
+      <div class="market-intelligence" style="height: 240px; padding: var(--space-lg); background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);">
         <!-- Market Overview Header -->
-        <div class="market-header" style="display: flex; justify-content: space-between; padding: var(--space-sm); background: linear-gradient(135deg, rgba(102,51,153,0.05) 0%, rgba(102,51,153,0.02) 100%); border-radius: var(--radius-md);">
-          <div class="market-metric">
-            <div class="metric-value" style="font-size: 16px; font-weight: bold; color: var(--expedia-blue);">$${market_overview.market_adr}</div>
-            <div class="metric-label" style="font-size: 10px; color: var(--text-secondary);">Market ADR <span style="color: var(--success-green);">+${market_overview.market_adr_trend}%</span></div>
+        <div class="market-header" style="display: flex; justify-content: space-between; margin-bottom: var(--space-lg); padding: var(--space-md); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(102,51,153,0.08); border: 1px solid rgba(102,51,153,0.05);">
+          <div class="market-metric" style="text-align: center;">
+            <div class="metric-value" style="font-size: 22px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">$${market_overview.market_adr}</div>
+            <div class="metric-label" style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Market ADR <span style="color: var(--success-green); font-weight: 600;">+${market_overview.market_adr_trend}%</span></div>
           </div>
-          <div class="market-metric">
-            <div class="metric-value" style="font-size: 16px; font-weight: bold; color: var(--expedia-blue);">${market_overview.market_occupancy}%</div>
-            <div class="metric-label" style="font-size: 10px; color: var(--text-secondary);">Market Occ <span style="color: var(--success-green);">+${market_overview.market_occupancy_trend}%</span></div>
+          <div class="market-metric" style="text-align: center;">
+            <div class="metric-value" style="font-size: 22px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">${market_overview.market_occupancy}%</div>
+            <div class="metric-label" style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Market Occ <span style="color: var(--success-green); font-weight: 600;">+${market_overview.market_occupancy_trend}%</span></div>
           </div>
-          <div class="market-metric">
-            <div class="metric-value" style="font-size: 16px; font-weight: bold; color: var(--expedia-blue);">$${market_overview.market_revpar}</div>
-            <div class="metric-label" style="font-size: 10px; color: var(--text-secondary);">Market RevPAR <span style="color: var(--success-green);">+${market_overview.market_revpar_trend}%</span></div>
+          <div class="market-metric" style="text-align: center;">
+            <div class="metric-value" style="font-size: 22px; font-weight: 700; color: var(--expedia-blue); margin-bottom: 4px;">$${market_overview.market_revpar}</div>
+            <div class="metric-label" style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Market RevPAR <span style="color: var(--success-green); font-weight: 600;">+${market_overview.market_revpar_trend}%</span></div>
           </div>
-          <div class="market-metric">
-            <div class="metric-value" style="font-size: 16px; font-weight: bold; color: var(--warning-orange);">${(demand_indicators.booking_pace)}</div>
-            <div class="metric-label" style="font-size: 10px; color: var(--text-secondary);">Pace Index <span style="color: var(--success-green);">+${demand_indicators.booking_pace_trend}%</span></div>
+          <div class="market-metric" style="text-align: center;">
+            <div class="metric-value" style="font-size: 22px; font-weight: 700; color: var(--warning-orange); margin-bottom: 4px;">${(demand_indicators.booking_pace)}</div>
+            <div class="metric-label" style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Pace Index <span style="color: var(--success-green); font-weight: 600;">+${demand_indicators.booking_pace_trend}%</span></div>
           </div>
         </div>
         
         <!-- Competitive Landscape -->
-        <div class="competitive-grid" style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+        <div class="competitive-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); height: 100px;">
           <!-- Competitor Performance -->
-          <div class="competitor-panel" style="padding: var(--space-sm); border: 1px solid rgba(102,51,153,0.1); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
-            <h4 style="margin: 0 0 var(--space-xs) 0; font-size: 11px; font-weight: bold; color: var(--text-primary);">Competitive Position</h4>
-            <div class="competitor-list" style="display: flex; flex-direction: column; gap: 2px;">
+          <div class="competitor-panel" style="padding: var(--space-md); border: 1px solid rgba(102,51,153,0.1); border-radius: 12px; background: white; box-shadow: 0 2px 4px rgba(102,51,153,0.05);">
+            <h4 style="margin: 0 0 var(--space-sm) 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Competitive Position</h4>
+            <div class="competitor-list" style="display: flex; flex-direction: column; gap: var(--space-xs);">
               ${competitorData.map(([brand, data]) => {
                 const trendIcon = data.trend === 'up' ? '↗️' : data.trend === 'down' ? '↘️' : '➡️';
                 const trendColor = data.trend === 'up' ? 'var(--success-green)' : data.trend === 'down' ? 'var(--error-red)' : 'var(--text-secondary)';
                 return `
-                  <div class="competitor-item" style="display: flex; justify-content: space-between; align-items: center; padding: 1px 0; font-size: 9px;">
-                    <span style="font-weight: 500; text-transform: capitalize;">${brand}</span>
-                    <span style="color: var(--text-secondary);">${data.occupancy}% • $${data.adr}</span>
-                    <span style="color: ${trendColor}; font-size: 8px;">${trendIcon} ${data.market_share}%</span>
+                  <div class="competitor-item" style="display: flex; justify-content: space-between; align-items: center; padding: var(--space-xs) 0; font-size: 12px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                    <span style="font-weight: 600; text-transform: capitalize; color: var(--text-primary);">${brand}</span>
+                    <span style="color: var(--text-secondary); font-weight: 500;">${data.occupancy}% • $${data.adr}</span>
+                    <span style="color: ${trendColor}; font-size: 11px; font-weight: 600;">${trendIcon} ${data.market_share}%</span>
                   </div>
                 `;
               }).join('')}
@@ -622,20 +618,20 @@ class ExpediaChat {
           </div>
           
           <!-- Demand Signals -->
-          <div class="demand-panel" style="padding: var(--space-sm); border: 1px solid rgba(102,51,153,0.1); border-radius: var(--radius-md); background: rgba(255,255,255,0.7);">
-            <h4 style="margin: 0 0 var(--space-xs) 0; font-size: 11px; font-weight: bold; color: var(--text-primary);">Demand Signals</h4>
-            <div class="demand-metrics" style="display: flex; flex-direction: column; gap: 2px; font-size: 9px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span>Flight Searches</span>
-                <span style="color: var(--success-green); font-weight: bold;">${(demand_indicators.flight_searches/1000).toFixed(0)}K <small>(+${demand_indicators.flight_searches_trend}%)</small></span>
+          <div class="demand-panel" style="padding: var(--space-md); border: 1px solid rgba(102,51,153,0.1); border-radius: 12px; background: white; box-shadow: 0 2px 4px rgba(102,51,153,0.05);">
+            <h4 style="margin: 0 0 var(--space-sm) 0; font-size: 14px; font-weight: 600; color: var(--text-primary);">Demand Signals</h4>
+            <div class="demand-metrics" style="display: flex; flex-direction: column; gap: var(--space-xs); font-size: 12px;">
+              <div style="display: flex; justify-content: space-between; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                <span style="font-weight: 500; color: var(--text-primary);">Flight Searches</span>
+                <span style="color: var(--success-green); font-weight: 600;">${(demand_indicators.flight_searches/1000).toFixed(0)}K <small style="color: var(--text-secondary);">(+${demand_indicators.flight_searches_trend}%)</small></span>
               </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>Hotel Searches</span>
-                <span style="color: var(--success-green); font-weight: bold;">${(demand_indicators.hotel_searches/1000).toFixed(0)}K <small>(+${demand_indicators.hotel_searches_trend}%)</small></span>
+              <div style="display: flex; justify-content: space-between; padding: var(--space-xs) 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                <span style="font-weight: 500; color: var(--text-primary);">Hotel Searches</span>
+                <span style="color: var(--success-green); font-weight: 600;">${(demand_indicators.hotel_searches/1000).toFixed(0)}K <small style="color: var(--text-secondary);">(+${demand_indicators.hotel_searches_trend}%)</small></span>
               </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>Lead Time</span>
-                <span style="color: var(--text-secondary); font-weight: bold;">${demand_indicators.lead_time}d <small>(${demand_indicators.lead_time_trend}%)</small></span>
+              <div style="display: flex; justify-content: space-between; padding: var(--space-xs) 0;">
+                <span style="font-weight: 500; color: var(--text-primary);">Lead Time</span>
+                <span style="color: var(--text-secondary); font-weight: 600;">${demand_indicators.lead_time}d <small>(${demand_indicators.lead_time_trend}%)</small></span>
               </div>
             </div>
           </div>
@@ -727,31 +723,31 @@ class ExpediaChat {
     const performanceGrade = getPerformanceGrade(performance_scores.overall_performance);
     
     chartContent.innerHTML = `
-      <div class="performance-coach" style="height: 240px; padding: var(--space-md); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm);">
+      <div class="performance-coach" style="height: 240px; padding: var(--space-lg); background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
         <!-- Performance Overview -->
-        <div class="performance-overview" style="display: flex; flex-direction: column; gap: var(--space-sm);">
+        <div class="performance-overview" style="display: flex; flex-direction: column; gap: var(--space-md);">
           <!-- Manager Score Circle -->
-          <div class="manager-score" style="text-align: center; padding: var(--space-sm); background: linear-gradient(135deg, rgba(40,167,69,0.05) 0%, rgba(40,167,69,0.02) 100%); border-radius: var(--radius-md);">
-            <div class="score-circle" style="width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, ${performanceGrade.color} 0%, ${performanceGrade.color}cc 100%); border-radius: 50%; color: white; font-size: 20px; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+          <div class="manager-score" style="text-align: center; padding: var(--space-md); background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(40,167,69,0.08); border: 1px solid rgba(40,167,69,0.05);">
+            <div class="score-circle" style="width: 80px; height: 80px; margin: 0 auto; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, ${performanceGrade.color} 0%, ${performanceGrade.color}cc 100%); border-radius: 50%; color: white; font-size: 28px; font-weight: 700; box-shadow: 0 6px 16px rgba(0,0,0,0.15); border: 3px solid rgba(255,255,255,0.3);">
               ${performanceGrade.grade}
             </div>
-            <div class="score-details" style="margin-top: var(--space-xs);">
-              <div style="font-size: 16px; font-weight: bold; color: var(--text-primary);">${performance_scores.overall_performance}/100</div>
-              <div style="font-size: 10px; color: var(--text-secondary);">Overall Performance</div>
-              <div style="font-size: 9px; color: ${performanceGrade.color}; font-weight: 500;">#${peer_benchmarks.territory_rank} of ${peer_benchmarks.total_territories} territories</div>
+            <div class="score-details" style="margin-top: var(--space-sm);">
+              <div style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">${performance_scores.overall_performance}/100</div>
+              <div style="font-size: 13px; color: var(--text-secondary); font-weight: 500;">Overall Performance</div>
+              <div style="font-size: 12px; color: ${performanceGrade.color}; font-weight: 600; margin-top: 4px;">#${peer_benchmarks.territory_rank} of ${peer_benchmarks.total_territories} territories</div>
             </div>
           </div>
           
           <!-- Key Performance Indicators -->
-          <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 9px;">
+          <div class="kpi-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); font-size: 11px;">
             ${Object.entries(kpi_tracking).map(([kpi, data]) => {
               const trendIcon = data.trend === 'up' ? '↗️' : data.trend === 'down' ? '↘️' : '➡️';
               const statusColor = data.current >= data.target ? 'var(--success-green)' : data.current >= data.target * 0.9 ? 'var(--warning-orange)' : 'var(--error-red)';
               return `
-                <div class="kpi-card" style="padding: 4px; border: 1px solid rgba(0,0,0,0.05); border-radius: 4px; background: rgba(255,255,255,0.8);">
-                  <div style="font-weight: bold; color: ${statusColor};">${data.current}%</div>
-                  <div style="color: var(--text-secondary); font-size: 8px;">${kpi.replace('_', ' ')} ${trendIcon}</div>
-                  <div style="color: var(--text-secondary); font-size: 7px;">Target: ${data.target}%</div>
+                <div class="kpi-card" style="padding: var(--space-sm); border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: center;">
+                  <div style="font-weight: 700; color: ${statusColor}; font-size: 16px; margin-bottom: 2px;">${data.current}%</div>
+                  <div style="color: var(--text-secondary); font-size: 10px; font-weight: 500; text-transform: capitalize;">${kpi.replace('_', ' ')} ${trendIcon}</div>
+                  <div style="color: var(--text-secondary); font-size: 9px; margin-top: 2px;">Target: ${data.target}%</div>
                 </div>
               `;
             }).join('')}
@@ -817,6 +813,31 @@ class ExpediaChat {
     const strokeDasharray = isDashed ? 'stroke-dasharray="4,4"' : '';
     
     return `<polyline points="${points}" fill="none" stroke="${color}" stroke-width="${strokeWidth}" ${strokeDasharray}/>`;
+  }
+  
+  generateSmoothPath(data, max, width, height, color, strokeWidth = 2, isDashed = false) {
+    if (data.length < 2) return '';
+    
+    const points = data.map((value, index) => ({
+      x: (index / (data.length - 1)) * width,
+      y: height - (value / max) * height
+    }));
+    
+    let path = `M ${points[0].x} ${points[0].y}`;
+    
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1];
+      const curr = points[i];
+      const cp1x = prev.x + (curr.x - prev.x) * 0.3;
+      const cp1y = prev.y;
+      const cp2x = curr.x - (curr.x - prev.x) * 0.3;
+      const cp2y = curr.y;
+      
+      path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`;
+    }
+    
+    const strokeDasharray = isDashed ? 'stroke-dasharray="6,4"' : '';
+    return `<path d="${path}" fill="none" stroke="${color}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round" ${strokeDasharray} style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));"/>`;
   }
 
   addMessageToChat(role, content) {
