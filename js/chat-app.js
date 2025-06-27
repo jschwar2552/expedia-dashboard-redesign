@@ -120,13 +120,14 @@ class ExpediaChat {
       this.addMessageToChat('assistant', data.message);
       
       // Update charts if data is provided
+      // Always try to update charts based on message content
+      if (window.simpleCharts && typeof window.simpleCharts.constructor.updateFromQuery === 'function') {
+        console.log('🚀 Triggering chart update for message:', message);
+        window.simpleCharts.constructor.updateFromQuery(message);
+      }
+      
       if (data.chartData && data.chartData.length > 0) {
         this.updateChartsFromData(data.chartData);
-      } else {
-        // Update simple charts based on query content
-        if (window.SimpleCharts) {
-          window.SimpleCharts.updateFromQuery(message);
-        }
       }
       
     } catch (error) {
@@ -172,13 +173,16 @@ class ExpediaChat {
       this.addMessageToChat('user', query);
       this.addMessageToChat('assistant', data.message);
       
+      // Always update charts for suggested queries
+      if (window.simpleCharts && typeof window.simpleCharts.constructor.updateFromQuery === 'function') {
+        console.log('🚀 Triggering chart update for query:', query);
+        window.simpleCharts.constructor.updateFromQuery(query);
+      } else {
+        console.warn('⚠️ Chart update method not available');
+      }
+      
       if (data.chartData && data.chartData.length > 0) {
         this.updateChartsFromData(data.chartData);
-      } else {
-        // Update simple charts based on quick query
-        if (window.SimpleCharts) {
-          window.SimpleCharts.updateFromQuery(query);
-        }
       }
       
     } catch (error) {

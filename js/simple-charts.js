@@ -55,20 +55,25 @@ class SimpleCharts {
   }
 
   updateChart(type, newData) {
+    console.log(`🔄 Updating ${type} chart with data:`, newData);
     // Update data and re-render specific chart
     Object.assign(this.data, newData);
     
     switch (type) {
       case 'territory':
+        console.log('📊 Rendering territory chart');
         this.renderTerritoryChart();
         break;
       case 'revenue':
+        console.log('💰 Rendering revenue chart');
         this.renderRevenueChart();
         break;
       case 'market':
+        console.log('🌍 Rendering market chart');
         this.renderMarketChart();
         break;
       case 'coach':
+        console.log('🏆 Rendering coach chart');
         this.renderCoachChart();
         break;
     }
@@ -76,13 +81,19 @@ class SimpleCharts {
 
   // Method to trigger updates from chat queries with compelling storylines
   static updateFromQuery(query) {
+    console.log('📊 SimpleCharts.updateFromQuery called with:', query);
     const charts = window.simpleCharts;
-    if (!charts) return;
+    if (!charts) {
+      console.warn('⚠️ window.simpleCharts not found');
+      return;
+    }
 
     const queryLower = query.toLowerCase();
+    console.log('🔍 Processing query:', queryLower);
     
     // Storyline 1: "Which hotels need attention this week?" - Crisis Management
     if (queryLower.includes('hotels') && queryLower.includes('attention')) {
+      console.log('😨 Triggering Crisis Management storyline');
       charts.updateChart('territory', { 
         revenue: '$3.1M', 
         growth: '+8.2%', 
@@ -104,6 +115,7 @@ class SimpleCharts {
     
     // Storyline 2: "Show me South Beach performance trends" - Seasonal Success
     else if (queryLower.includes('south beach') && queryLower.includes('trends')) {
+      console.log('🏖️ Triggering South Beach Success storyline');
       charts.updateChart('territory', { 
         revenue: '$5.8M', 
         growth: '+31.4%', 
@@ -125,6 +137,7 @@ class SimpleCharts {
     
     // Storyline 3: "Revenue optimization opportunities" - Growth Focus
     else if (queryLower.includes('revenue') && queryLower.includes('optimization')) {
+      console.log('📈 Triggering Revenue Optimization storyline');
       charts.updateChart('territory', { 
         revenue: '$4.6M', 
         growth: '+24.1%', 
@@ -146,6 +159,7 @@ class SimpleCharts {
     
     // Storyline 4: "Competitive analysis vs. Marriott" - Market Position
     else if (queryLower.includes('competitive') || queryLower.includes('marriott')) {
+      console.log('🥊 Triggering Competitive Analysis storyline');
       charts.updateChart('territory', { 
         revenue: '$4.1M', 
         growth: '+19.3%', 
