@@ -191,16 +191,8 @@ class ExpediaChat {
   }
 
   async loadInitialChartData() {
-    const chartTypes = ['territory-performance', 'revenue-opportunities', 'market-intelligence', 'performance-coach'];
-    
-    for (const chartType of chartTypes) {
-      try {
-        // Load charts with default data structure to avoid initial errors
-        this.updateChart(chartType, { data: {} });
-      } catch (error) {
-        console.error(`Failed to load ${chartType} data:`, error);
-      }
-    }
+    // Simple charts system handles initial rendering
+    console.log('📊 Using simple chart system - no complex data loading needed');
   }
 
   updateChartsFromData(chartDataArray) {
