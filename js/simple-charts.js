@@ -202,27 +202,40 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Actionable opportunity with clear steps
+    // STORY: Revenue pipeline intelligence with booking window analysis
     chartContent.innerHTML = `
-      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
-        <!-- Hero Opportunity -->
-        <div style="text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(253,126,20,0.1); flex-shrink: 0;">
-          <div style="font-size: 38px; font-weight: 700; color: #fd7e14; line-height: 1; margin-bottom: 4px;">${this.data.biggestWin}</div>
-          <div style="font-size: 14px; color: #666; font-weight: 500;">Top Revenue Opportunity</div>
-          <div style="font-size: 16px; color: #003580; font-weight: 600; margin-top: 2px;">${this.data.topHotel}</div>
+      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Revenue Opportunity Header -->
+        <div style="text-align: center; padding: 14px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(253,126,20,0.1); flex-shrink: 0;">
+          <div style="font-size: 36px; font-weight: 700; color: #fd7e14; line-height: 1; margin-bottom: 3px;">${this.data.biggestWin}</div>
+          <div style="font-size: 13px; color: #666; font-weight: 500;">${this.data.topHotel} • 30-day window</div>
+          <div style="font-size: 14px; color: #28a745; font-weight: 600; margin-top: 1px;">78% conversion probability</div>
         </div>
         
-        <!-- Action Steps -->
-        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 6px rgba(253,126,20,0.1); flex: 1;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">Next Steps to Capture</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #28a745;">
-              <div style="background: #28a745; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; flex-shrink: 0;">1</div>
-              <div style="font-size: 13px; color: #333; font-weight: 500;">Summer rate optimization</div>
+        <!-- Revenue Management Intelligence -->
+        <div style="background: white; border-radius: 8px; padding: 10px; box-shadow: 0 2px 6px rgba(253,126,20,0.1); flex: 1;">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">🎯 Revenue Management Levers</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">ADR Optimization</div>
+                <div style="font-size: 10px; color: #666;">July beach season peak</div>
+              </div>
+              <div style="font-size: 12px; color: #28a745; font-weight: 700;">+$340K</div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #fd7e14;">
-              <div style="background: #fd7e14; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; flex-shrink: 0;">2</div>
-              <div style="font-size: 13px; color: #333; font-weight: 500;">Q3 group sales push</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #fd7e14;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">Group Block Release</div>
+                <div style="font-size: 10px; color: #666;">Corporate events Q3</div>
+              </div>
+              <div style="font-size: 12px; color: #fd7e14; font-weight: 700;">+$280K</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #6633cc;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">Length of Stay</div>
+                <div style="font-size: 10px; color: #666;">Weekend packages</div>
+              </div>
+              <div style="font-size: 12px; color: #6633cc; font-weight: 700;">+$270K</div>
             </div>
           </div>
         </div>
@@ -237,33 +250,47 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Market momentum with context
+    // STORY: Real-time market pulse with live intelligence
     chartContent.innerHTML = `
-      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
-        <!-- Hero Market Signal -->
-        <div style="text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(102,51,153,0.1); flex-shrink: 0;">
-          <div style="font-size: 38px; font-weight: 700; color: #fd7e14; line-height: 1; margin-bottom: 4px;">+85%</div>
-          <div style="font-size: 14px; color: #666; font-weight: 500;">Tourism Demand Surge</div>
-          <div style="font-size: 16px; color: #6633cc; font-weight: 600; margin-top: 2px;">🌞 Summer Peak Season</div>
+      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Market Pulse Header -->
+        <div style="text-align: center; padding: 14px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(102,51,153,0.1); flex-shrink: 0;">
+          <div style="font-size: 36px; font-weight: 700; color: #fd7e14; line-height: 1; margin-bottom: 3px;">+85%</div>
+          <div style="font-size: 13px; color: #666; font-weight: 500;">Market demand surge • Live data</div>
+          <div style="font-size: 14px; color: #28a745; font-weight: 600; margin-top: 1px;">$2.3M economic impact</div>
         </div>
         
-        <!-- Market Drivers -->
-        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 6px rgba(102,51,153,0.1); flex: 1;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">Perfect Conditions Aligned</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #fd7e14;">
-              <div style="font-size: 18px;">🌤️</div>
+        <!-- Live Market Intelligence -->
+        <div style="background: white; border-radius: 8px; padding: 10px; box-shadow: 0 2px 6px rgba(102,51,153,0.1); flex: 1;">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">📊 Live Market Signals</div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #1DA1F2;">
               <div>
-                <div style="font-size: 13px; color: #333; font-weight: 500;">Perfect Beach Weather</div>
-                <div style="font-size: 11px; color: #666;">82°F with clear skies</div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">📱 Social Media Buzz</div>
+                <div style="font-size: 10px; color: #666;">#MiamiBeach trending</div>
               </div>
+              <div style="font-size: 12px; color: #1DA1F2; font-weight: 700;">+47%</div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #28a745;">
-              <div style="font-size: 18px;">🎉</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #fd7e14;">
               <div>
-                <div style="font-size: 13px; color: #333; font-weight: 500;">Festival Season</div>
-                <div style="font-size: 11px; color: #666;">Summer events driving bookings</div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">🌊 Art Basel Impact</div>
+                <div style="font-size: 10px; color: #666;">Dec 6-8 • Pre-bookings</div>
               </div>
+              <div style="font-size: 12px; color: #fd7e14; font-weight: 700;">+340%</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">✈️ Flight Arrivals</div>
+                <div style="font-size: 10px; color: #666;">MIA terminal data</div>
+              </div>
+              <div style="font-size: 12px; color: #28a745; font-weight: 700;">+23%</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #ff6b35;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">📰 News Sentiment</div>
+                <div style="font-size: 10px; color: #666;">Tourism coverage</div>
+              </div>
+              <div style="font-size: 12px; color: #ff6b35; font-weight: 700;">92%</div>
             </div>
           </div>
         </div>
@@ -278,33 +305,47 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Performance assessment with clear development focus
+    // STORY: Property operations command center with specific levers
     chartContent.innerHTML = `
-      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 12px;">
-        <!-- Performance Grade -->
-        <div style="text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(40,167,69,0.1); flex-shrink: 0;">
-          <div style="font-size: 38px; font-weight: 700; color: #28a745; line-height: 1; margin-bottom: 4px;">A-</div>
-          <div style="font-size: 14px; color: #666; font-weight: 500;">Performance Grade</div>
-          <div style="font-size: 16px; color: #003580; font-weight: 600; margin-top: 2px;">#3 of 15 territories</div>
+      <div style="height: 220px; padding: 12px; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+        <!-- Performance Assessment -->
+        <div style="text-align: center; padding: 14px; background: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(40,167,69,0.1); flex-shrink: 0;">
+          <div style="font-size: 36px; font-weight: 700; color: #28a745; line-height: 1; margin-bottom: 3px;">A-</div>
+          <div style="font-size: 13px; color: #666; font-weight: 500;">Territory Performance</div>
+          <div style="font-size: 14px; color: #003580; font-weight: 600; margin-top: 1px;">#3 of 15 • $4.2M revenue</div>
         </div>
         
-        <!-- Development Focus -->
-        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 6px rgba(40,167,69,0.1); flex: 1;">
-          <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">🎯 Development Focus</div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #dc3545;">
-              <div style="background: #dc3545; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; flex-shrink: 0;">!</div>
+        <!-- Property Operations Levers -->
+        <div style="background: white; border-radius: 8px; padding: 10px; box-shadow: 0 2px 6px rgba(40,167,69,0.1); flex: 1;">
+          <div style="font-size: 12px; font-weight: 600; color: #333; margin-bottom: 8px;">🏨 Property Operations Levers</div>
+          <div style="display: flex; flex-direction: column; gap: 5px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #dc3545;">
               <div>
-                <div style="font-size: 13px; color: #333; font-weight: 500;">Group Sales Strategy</div>
-                <div style="font-size: 11px; color: #666;">65% of target - needs improvement</div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">🎯 Group Sales Focus</div>
+                <div style="font-size: 10px; color: #666;">Fontainebleau • Corporate events</div>
               </div>
+              <div style="font-size: 12px; color: #dc3545; font-weight: 700;">65%</div>
             </div>
-            <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: #f8f9fa; border-radius: 6px; border-left: 3px solid #28a745;">
-              <div style="background: #28a745; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; flex-shrink: 0;">✓</div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #28a745;">
               <div>
-                <div style="font-size: 13px; color: #333; font-weight: 500;">Revenue Growth</div>
-                <div style="font-size: 11px; color: #666;">+18.7% YTD - exceeding target</div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">💰 RevPAR Optimization</div>
+                <div style="font-size: 10px; color: #666;">Beach properties • ADR boost</div>
               </div>
+              <div style="font-size: 12px; color: #28a745; font-weight: 700;">+$48</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #fd7e14;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">⭐ Guest Satisfaction</div>
+                <div style="font-size: 10px; color: #666;">Service recovery • Retention</div>
+              </div>
+              <div style="font-size: 12px; color: #fd7e14; font-weight: 700;">8.4/10</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px 8px; background: #f8f9fa; border-radius: 4px; border-left: 3px solid #6633cc;">
+              <div>
+                <div style="font-size: 11px; color: #333; font-weight: 600;">📊 Ancillary Revenue</div>
+                <div style="font-size: 10px; color: #666;">Spa • F&B • Experiences</div>
+              </div>
+              <div style="font-size: 12px; color: #6633cc; font-weight: 700;">+18%</div>
             </div>
           </div>
         </div>
