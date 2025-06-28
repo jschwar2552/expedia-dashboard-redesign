@@ -27,15 +27,15 @@ class SimpleCharts {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
     return this.data.chartBars.map((height, i) => {
       const isHighlight = i === months.length - 1; // June is current
-      const color = isHighlight ? 'linear-gradient(to top, #28a745, #34ce57)' : 'linear-gradient(to top, #003580, #0066cc)';
-      const shadow = isHighlight ? 'box-shadow: 0 2px 8px rgba(40,167,69,0.3);' : '';
+      const barHeight = Math.max(height * 0.4, 15); // Scale down but keep minimum
+      const color = isHighlight ? '#28a745' : '#003580';
       const textColor = isHighlight ? '#28a745' : '#666';
       const fontWeight = isHighlight ? '600' : '500';
       
       return `
-        <div style="display: flex; flex-direction: column; align-items: center;">
-          <div style="width: 30px; height: ${height}px; background: ${color}; border-radius: 3px; margin-bottom: 4px; ${shadow}"></div>
-          <span style="font-size: 10px; font-weight: ${fontWeight}; color: ${textColor};">${months[i]}</span>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+          <div style="width: 18px; height: ${barHeight}px; background: ${color}; border-radius: 2px;"></div>
+          <span style="font-size: 9px; font-weight: ${fontWeight}; color: ${textColor}; line-height: 1;">${months[i]}</span>
         </div>
       `;
     }).join('');
@@ -172,21 +172,21 @@ class SimpleCharts {
     const chartContent = container.querySelector('.chart-content');
     if (!chartContent) return;
 
-    // STORY: Clean revenue focus
+    // STORY: Ultra-clean revenue focus
     chartContent.innerHTML = `
-      <div style="height: 200px; padding: 12px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%); overflow-y: auto;">
-        <!-- Main Metric -->
-        <div style="text-align: center; margin-bottom: 12px; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
-          <div style="font-size: 32px; font-weight: 700; color: #28a745; margin-bottom: 2px;">${this.data.revenue}</div>
-          <div style="font-size: 13px; color: #666;">June Revenue • ${this.data.growth} YTD</div>
+      <div style="height: 200px; padding: 8px; background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%); overflow-y: auto; display: flex; flex-direction: column;">
+        <!-- Main Metric - Compact -->
+        <div style="text-align: center; margin-bottom: 8px; padding: 12px; background: white; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,53,128,0.08); flex-shrink: 0;">
+          <div style="font-size: 28px; font-weight: 700; color: #28a745; line-height: 1; margin-bottom: 2px;">${this.data.revenue}</div>
+          <div style="font-size: 12px; color: #666; line-height: 1;">June Revenue • ${this.data.growth} YTD</div>
         </div>
         
-        <!-- Simple Trend -->
-        <div style="background: white; border-radius: 8px; padding: 12px; box-shadow: 0 2px 8px rgba(0,53,128,0.08);">
-          <div style="display: flex; align-items: end; justify-content: space-between; height: 40px; margin-bottom: 8px;">
+        <!-- Chart Only -->
+        <div style="background: white; border-radius: 6px; padding: 8px; box-shadow: 0 1px 4px rgba(0,53,128,0.08); flex: 1; display: flex; flex-direction: column; justify-content: center; min-height: 0;">
+          <div style="display: flex; align-items: end; justify-content: space-between; height: 35px; margin-bottom: 6px; padding: 0 4px;">
             ${this.generateChartBars()}
           </div>
-          <div style="font-size: 11px; color: #666; text-align: center;">Jan-Jun Growth Trajectory</div>
+          <div style="font-size: 10px; color: #666; text-align: center; line-height: 1;">Growth Trajectory</div>
         </div>
       </div>
     `;
